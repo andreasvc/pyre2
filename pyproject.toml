@@ -3,12 +3,39 @@ requires = [
     "setuptools>=42",
     "wheel",
     "Cython>=0.20",
-    "pybind11>=2.6.0",
+    "pybind11[global]>=2.6.0,<=2.12",
     "ninja; sys_platform != 'Windows'",
     "cmake>=3.15",
 ]
-
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyre2"
+version = "0.3.7" # You may need to specify the version here
+requires-python = ">=3.6"
+authors = [
+    { name = "Andreas van Cranenburgh", email = "andreas@unstable.nl" }
+]
+maintainers = [
+    { name = "Steve Arnold", email = "nerdboy@gentoo.org" }
+]
+description = "Python wrapper for Google's RE2 using Cython"
+readme = "README.rst"
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Cython",
+    "Programming Language :: Python :: 3.6",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+perf = ["regex"]
+
+[project.urls]
+Homepage = "https://github.com/andreasvc/pyre2"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
