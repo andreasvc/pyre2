@@ -1,0 +1,18 @@
+name: SonarQube analysis
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  sonarqube:
+    uses: RTBHouse-OEET/common-actions/.github/workflows/sonarqube.yml@master
+    secrets: inherit
+    with:
+      sonarqube_project_key: ${{ github.event.repository.name }}
