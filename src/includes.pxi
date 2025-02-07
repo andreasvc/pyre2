@@ -12,11 +12,6 @@ cdef extern from *:
     cdef void emit_endif "#endif //" ()
 
 
-cdef extern from "Python.h":
-    int PyObject_CheckReadBuffer(object)
-    int PyObject_AsReadBuffer(object, const void **, Py_ssize_t *)
-
-
 cdef extern from "re2/stringpiece.h" namespace "re2":
     cdef cppclass StringPiece:
         StringPiece()
