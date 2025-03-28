@@ -5,7 +5,7 @@ requires = [
     "Cython>=0.20",
     "pybind11>=2.12",
     "ninja; sys_platform != 'Windows'",
-    "cmake>=3.18",
+    "cmake (>=3.18,<4.0.0)",
 ]
 
 build-backend = "setuptools.build_meta"
