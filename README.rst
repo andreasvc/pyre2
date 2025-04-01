@@ -148,6 +148,23 @@ function ``set_fallback_notification`` determines the behavior in these cases::
 ``re.FALLBACK_QUIETLY`` (default), ``re.FALLBACK_WARNING`` (raise a warning),
 and ``re.FALLBACK_EXCEPTION`` (raise an exception).
 
+You might also change the fallback module from ``re`` (default) to something
+else, like ``regex``. You can achieve that with the function
+``set_fallback_module``::
+
+    >>> import re2
+    >>> re2.set_fallback_notification(re2.FALLBACK_WARNING)
+    >>> type(re2.compile(r"foo"))
+    <class 're2.Pattern'>
+    >>> type(re2.compile(r"foo(?!bar)"))
+    <stdin>:1: UserWarning: WARNING: Using re module. Reason: invalid perl operator: (?!
+    <class 're2.FallbackPattern'>
+    >>> import regex
+    >>> re2.set_fallback_module(regex)
+    >>> type(re2.compile(r"foo(?!bar)"))
+    <stdin>:1: UserWarning: WARNING: Using regex module. Reason: invalid perl operator: (?!
+    <class 're2.FallbackPattern'>
+
 Documentation
 =============
 

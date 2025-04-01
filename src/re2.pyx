@@ -8,8 +8,8 @@ Intended as a drop-in replacement for ``re``. Unicode is supported by encoding
 to UTF-8, and bytes strings are treated as UTF-8 when the UNICODE flag is given.
 For best performance, work with UTF-8 encoded bytes strings.
 
-Regular expressions that are not compatible with RE2 are processed with
-fallback to ``re``. Examples of features not supported by RE2:
+Regular expressions that are not compatible with RE2 are processed with a
+fallback module (default is ``re``). Examples of features not supported by RE2:
 
     - lookahead assertions ``(?!...)``
     - backreferences (``\\n`` in search pattern)
@@ -19,7 +19,7 @@ On the other hand, unicode character classes are supported (e.g., ``\p{Greek}``)
 Syntax reference: https://github.com/google/re2/wiki/Syntax
 
 What follows is a reference for the regular expression syntax supported by this
-module (i.e., without requiring fallback to `re`).
+module (i.e., without requiring fallback to `re` or compatible module).
 
 Regular expressions can contain both special and ordinary characters.
 Most ordinary characters, like "A", "a", or "0", are the simplest
@@ -107,6 +107,7 @@ include "includes.pxi"
 
 import re
 import sys
+import types
 import warnings
 from re import error as RegexError
 
@@ -150,6 +151,7 @@ VERSION = (0, 2, 23)
 VERSION_HEX = 0x000217
 
 cdef int _I = I, _M = M, _S = S, _U = U, _X = X, _L = L
+cdef object fallback_module = re
 cdef int current_notification = FALLBACK_QUIETLY
 cdef bint PY2 = PY_MAJOR_VERSION == 2
 
@@ -281,6 +283,19 @@ class BackreferencesException(Exception):
 class CharClassProblemException(Exception):
     """Search pattern contains unsupported character class."""
     pass
+
+
+def set_fallback_module(module):
+    """Set the fallback module; defaults to ``re`` and must be
+    ``re``-compatible."""
+    global fallback_module
+    if not isinstance(module, types.ModuleType):
+        raise TypeError("fallback is not a module")
+    if not hasattr(module, "Pattern"):
+        raise ValueError("fallback module does not contain Pattern")
+    if module != fallback_module:
+        purge()  # cache may contain items from a different fallback module
+    fallback_module = module
 
 
 def set_fallback_notification(level):
