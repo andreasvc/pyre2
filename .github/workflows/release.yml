@@ -128,7 +128,7 @@ jobs:
 
       - name: Create draft release
         id: create_release
-        uses: softprops/action-gh-release@main
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -145,4 +145,4 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.pypi_password }}
-          packages_dir: artifact/
+          packages_dir: artifacts/
