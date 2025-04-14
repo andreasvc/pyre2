@@ -151,7 +151,6 @@ VERSION_HEX = 0x000217
 
 cdef int _I = I, _M = M, _S = S, _U = U, _X = X, _L = L
 cdef int current_notification = FALLBACK_QUIETLY
-cdef bint PY2 = PY_MAJOR_VERSION == 2
 
 # Type of compiled re object from Python stdlib
 SREPattern = type(re.compile(''))
@@ -252,7 +251,7 @@ def escape(pattern):
     """Escape all non-alphanumeric characters in pattern."""
     cdef bint uni = isinstance(pattern, unicode)
     cdef list s
-    if PY2 or uni:
+    if uni:
         s = list(pattern)
     else:
         s = [bytes([c]) for c in pattern]
@@ -350,9 +349,9 @@ cdef inline unicode_to_bytes(object pystring, int * encoded,
         encoded[0] = 1 if origlen == len(pystring) else 2
     else:
         encoded[0] = 0
-    if not PY2 and checkotherencoding > 0 and not encoded[0]:
+    if checkotherencoding > 0 and not encoded[0]:
         raise TypeError("can't use a string pattern on a bytes-like object")
-    elif not PY2 and checkotherencoding == 0 and encoded[0]:
+    elif checkotherencoding == 0 and encoded[0]:
         raise TypeError("can't use a bytes pattern on a string-like object")
     return pystring
 
@@ -366,14 +365,7 @@ cdef inline int pystring_to_cstring(
     cdef int result = -1
     cstring[0] = NULL
     size[0] = 0
-    if PY2:
-        # Although the new-style buffer interface was backported to Python 2.6,
-        # some modules, notably mmap, only support the old buffer interface.
-        # Cf. http://bugs.python.org/issue9229
-        if PyObject_CheckReadBuffer(pystring) == 1:
-            result = PyObject_AsReadBuffer(
-                    pystring, <const void **>cstring, size)
-    elif PyObject_CheckBuffer(pystring) == 1:  # new-style Buffer interface
+    if PyObject_CheckBuffer(pystring) == 1:  # new-style Buffer interface
         result = PyObject_GetBuffer(pystring, buf, PyBUF_SIMPLE)
         if result == 0:
             cstring[0] = <char *>buf.buf
@@ -383,8 +375,7 @@ cdef inline int pystring_to_cstring(
 
 cdef inline void release_cstring(Py_buffer *buf):
     """Release buffer if necessary."""
-    if not PY2:
-        PyBuffer_Release(buf)
+    PyBuffer_Release(buf)
 
 
 cdef utf8indices(char * cstring, int size, int *pos, int *endpos):

@@ -115,12 +115,12 @@ cdef class Match:
         """Expand a template with groups."""
         cdef bytearray result = bytearray()
         if isinstance(template, unicode):
-            if not PY2 and not self.encoded:
+            if not self.encoded:
                 raise ValueError(
                         'cannot expand unicode template on bytes pattern')
             templ = template.encode('utf8')
         else:
-            if not PY2 and self.encoded:
+            if self.encoded:
                 raise ValueError(
                         'cannot expand bytes template on unicode pattern')
             templ = bytes(template)

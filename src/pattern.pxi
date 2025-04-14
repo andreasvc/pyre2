@@ -417,7 +417,7 @@ cdef class Pattern:
         if not repl_encoded and not isinstance(repl, bytes):
             repl_b = bytes(repl)  # coerce buffer to bytes object
 
-        if count > 1 or (b'\\' if PY2 else <char>b'\\') in repl_b:
+        if count > 1 or <char>b'\\' in repl_b:
             # Limit on number of substitutions or replacement string contains
             # escape sequences; handle with Match.expand() implementation.
             # RE2 does support simple numeric group references \1, \2,
