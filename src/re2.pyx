@@ -291,8 +291,8 @@ def set_fallback_module(module):
     global fallback_module
     if not isinstance(module, types.ModuleType):
         raise TypeError("fallback is not a module")
-    if not hasattr(module, "Pattern"):
-        raise ValueError("fallback module does not contain Pattern")
+    if not hasattr(module, "compile") or not callable(getattr(module, "compile")):
+        raise ValueError("fallback module does not contain compile method")
     if module != fallback_module:
         purge()  # cache may contain items from a different fallback module
     fallback_module = module

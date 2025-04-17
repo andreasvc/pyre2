@@ -31,7 +31,6 @@ requirements:
 test:
   requires:
     - pytest
-    - regex
   commands:
     - export "PYTHONIOENCODING=utf8"  # [unix]
     - set "PYTHONIOENCODING=utf8"  # [win]
