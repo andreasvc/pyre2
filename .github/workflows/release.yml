@@ -140,7 +140,7 @@ jobs:
           # uncomment below to upload wheels to github releases
           files: artifacts/pyre2*
 
-      - uses: pypa/gh-action-pypi-publish@master
+      - uses: pypa/gh-action-pypi-publish@release/v1
         if: ${{ github.actor == github.repository_owner && github.ref == 'refs/heads/master' }}
         with:
           user: __token__
