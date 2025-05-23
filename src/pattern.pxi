@@ -600,11 +600,11 @@ cdef class Pattern:
         del self.re_pattern
 
 
-class PythonRePattern:
-    """A wrapper for re.Pattern to support the extra methods defined by re2
-    (contains, count)."""
+class FallbackPattern:
+    """A wrapper for non-re2 ``Pattern`` to support the extra methods defined
+    by re2 (contains, count)."""
     def __init__(self, pattern, flags=None):
-        self._pattern = re.compile(pattern, flags)
+        self._pattern = fallback_module.compile(pattern, flags)
         self.pattern = pattern
         self.flags = flags
         self.groupindex = self._pattern.groupindex
