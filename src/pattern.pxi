@@ -647,4 +647,4 @@ class FallbackPattern:
         return repr(self._pattern)
 
     def __reduce__(self):
-        return (self, (self.pattern, self.flags))
+        return (self.__class__, (self.pattern, self.flags))
