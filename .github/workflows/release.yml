@@ -17,7 +17,7 @@ jobs:
           arch: "x86_64"
         - os: "ubuntu-22.04"
           arch: "aarch64"
-        - os: "macos-latest"
+        - os: "macos-14"
           arch: "arm64"
           macosx_deployment_target: "14.0"
         - os: "windows-latest"
