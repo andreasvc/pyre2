@@ -111,6 +111,14 @@ An alternative to the above is provided via the `conda`_ recipe (use the
 .. _conda: https://anaconda.org/conda-forge/pyre2
 .. _miniconda installer: https://docs.conda.io/en/latest/miniconda.html
 
+Documentation
+=============
+
+Consult the documentation
+
+- online: http://andreasvc.github.io/pyre2/
+- interactively through ipython or ``pydoc re2`` etc.
+- in the source code as docstrings.
 
 Backwards Compatibility
 =======================
@@ -164,12 +172,6 @@ else, like ``regex``. You can achieve that with the function
     >>> type(re2.compile(r"foo(?!bar)"))
     <stdin>:1: UserWarning: WARNING: Using regex module. Reason: invalid perl operator: (?!
     <class 're2.FallbackPattern'>
-
-Documentation
-=============
-
-Consult the docstrings in the source code or interactively
-through ipython or ``pydoc re2`` etc.
 
 Unicode Support
 ===============
