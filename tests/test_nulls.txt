@@ -8,18 +8,18 @@ Reported in https://github.com/andreasvc/pyre2/issues/56
 Using split:
 
 	>>> regex = re2.compile(b",")
-	>>> regex.split(b"_first,_\000second")
-	[b'_first', b'_\000second']
+	>>> regex.split(b"_first,_\x00second")
+	[b'_first', b'_\x00second']
 
 Using sub with a string and count parameter:
 
 	>>> regex = re2.compile(",")
-	>>> regex.sub(repl=".", string="_first,_second,\000third", count=2)
-	b'_first._second.\000third'
+	>>> regex.sub(repl=".", string="_first,_second,\x00third", count=2)
+	b'_first._second.\x00third'
 
 Using sub with a function as repl:
 
 	>>> regex = re2.compile(",")
 	>>> def f(m): return '.'
-	>>> regex.sub(repl=f, string="_first,_second,\000third")
-	b'_first._second.\000third'
+	>>> regex.sub(repl=f, string="_first,_second,\x00third")
+	b'_first._second.\x00third'
