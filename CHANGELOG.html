@@ -1,0 +1,787 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; pyre2 0.3.11.dev5+ge83fc4d04 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f263d1f0"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="re2 module" href="api/re2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyre2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">pyre2: Python RE2 wrapper for linear-time regular expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">src</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-6-29-g1465367">v0.3.6-29-g1465367</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changes">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixes">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-6-2021-05-05">v0.3.6 (2021-05-05)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-4-2021-04-10">v0.3.4 (2021-04-10)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-3-2021-01-26">v0.3.3 (2021-01-26)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-2-2020-12-16">v0.3.2 (2020-12-16)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-1-2020-10-27">v0.3.1 (2020-10-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-2020-10-27">v0.3 (2020-10-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-2-22-2015-05-15">release/0.2.22 (2015-05-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-2-21-2015-05-14">release/0.2.21 (2015-05-14)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-2-20-2011-11-15">release/0.2.20 (2011-11-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-2-16-2011-11-08">release/0.2.16 (2011-11-08)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyre2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CHANGELOG.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading"></a></h1>
+<section id="v0-3-6-29-g1465367">
+<h2>v0.3.6-29-g1465367<a class="headerlink" href="#v0-3-6-29-g1465367" title="Link to this heading"></a></h2>
+<section id="changes">
+<h3>Changes<a class="headerlink" href="#changes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Switch conda workflow to condadev environment. [Stephen Arnold]</p></li>
+<li><p>Swap out flake8 for cython-lint, update setup files, remove pep8 cfg.
+[Stephen Arnold]</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Cleanup tests and fix a raw string test, enable more win32. [Stephen
+Arnold]</p>
+<ul>
+<li><p>split all runners into separate arch via matrix</p></li>
+<li><p>macos does need macos-14 to get a proper arm64 build</p></li>
+</ul>
+</li>
+<li><p>Apply emptygroups fix and remove conda-only patch, also. [Stephen L
+Arnold]</p>
+<ul>
+<li><p>release workflow: restrict pypi upload to repo owner</p></li>
+<li><p>tox.ini: replace deprecated pep517 module, update deploy url</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="other">
+<h3>Other<a class="headerlink" href="#other" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Fix #42. [Andreas van Cranenburgh]</p></li>
+<li><p>Include current notification level in cache key. [Andreas van
+Cranenburgh]</p>
+<p>this prevents a cached regular expression being used that was created
+with a different notification level.</p>
+<p>For example, the following now generates the expected warning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">re2</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">re2</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;a*+&#39;</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;a*+&#39;</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">re2</span><span class="o">.</span><span class="n">set_fallback_notification</span><span class="p">(</span><span class="n">re2</span><span class="o">.</span><span class="n">FALLBACK_WARNING</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">re2</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;a*+&#39;</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mf">041122e221</span><span class="n">c7</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span> <span class="ne">UserWarning</span><span class="p">:</span> <span class="n">WARNING</span><span class="p">:</span> <span class="n">Using</span> <span class="n">re</span> <span class="n">module</span><span class="o">.</span> <span class="n">Reason</span><span class="p">:</span> <span class="n">bad</span> <span class="n">repetition</span> <span class="n">operator</span><span class="p">:</span> <span class="o">*+</span>
+  <span class="n">re2</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;a*+&#39;</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;a*+&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Support fallback to Python re for possessive quantifiers. [Andreas van
+Cranenburgh]</p></li>
+<li><p>Document lack of support for possessive quantifiers and atomic groups.
+[Andreas van Cranenburgh]</p></li>
+<li><p>Make tests pass on my system; if this behavior turns out to be
+inconsistent across versions/platforms, maybe the test should be
+disabled altogether. #27. [Andreas van Cranenburgh]</p></li>
+<li><p>Add NOFLAGS and RegexFlags constants; #41. [Andreas van Cranenburgh]</p></li>
+<li><p>Remove python versions for make valgrind. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #33 from sarnold/conda-patch. [Andreas van
+Cranenburgh]</p>
+<p>Conda patch for None vs empty string change</p>
+</li>
+<li><p>Merge pull request #32 from JustAnotherArchivist/match-getitem.
+[Andreas van Cranenburgh]</p>
+<p>Make Match objects subscriptable</p>
+</li>
+<li><p>Add test for Match subscripting. [JustAnotherArchivist]</p></li>
+<li><p>Make Match objects subscriptable. [JustAnotherArchivist]</p>
+<p>Fixes #31</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="v0-3-6-2021-05-05">
+<h2>v0.3.6 (2021-05-05)<a class="headerlink" href="#v0-3-6-2021-05-05" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Merge pull request #30 from sarnold/release-pr. [Andreas van
+Cranenburgh]</p>
+<p>workflow updates</p>
+</li>
+<li><p>Add missing sdist job and artifact check to workflows, bump version.
+[Stephen L Arnold]</p></li>
+<li><p>Bump version again. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #28 from sarnold/use-action. [Andreas van
+Cranenburgh]</p>
+<p>Workflow cleanup</p>
+</li>
+<li><p>Move pypi upload to end of release.yml, use gitchangelog action.
+[Stephen L Arnold]</p></li>
+</ul>
+</section>
+<section id="v0-3-4-2021-04-10">
+<h2>v0.3.4 (2021-04-10)<a class="headerlink" href="#v0-3-4-2021-04-10" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Changes<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Ci: update workflows and tox cfg (use tox for smoke test) [Stephen L
+Arnold]</p></li>
+<li><p>Rename imported test helpers to avoid any discovery issues. [Stephen L
+Arnold]</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Apply test patch, cleanup tox and pytest args. [Stephen L Arnold]</p></li>
+<li><p>Handle invalid escape sequence warnings, revert path changes. [Stephen
+L Arnold]</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Other<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Bump version. [Andreas van Cranenburgh]</p></li>
+<li><p>Improve fix for #26. [Andreas van Cranenburgh]</p></li>
+<li><p>Add test for #26. [Andreas van Cranenburgh]</p></li>
+<li><p>Fix infinite loop on substitutions of empty matches; fixes #26.
+[Andreas van Cranenburgh]</p></li>
+<li><p>Fix “make test” and “make test2” [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #25 from sarnold/last-moves. [Andreas van
+Cranenburgh]</p>
+<p>Last moves</p>
+</li>
+<li><p>Another one. [Andreas van Cranenburgh]</p></li>
+<li><p>Fix fix of conda patch. [Andreas van Cranenburgh]</p></li>
+<li><p>Fix conda patch. [Andreas van Cranenburgh]</p></li>
+<li><p>Fix “make test”; rename doctest files for autodetection. [Andreas van
+Cranenburgh]</p></li>
+<li><p>Fix narrow unicode detection. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #24 from sarnold/tst-cleanup. [Andreas van
+Cranenburgh]</p>
+<p>Test cleanup</p>
+</li>
+<li><p>Fix Python 2 compatibility. [Andreas van Cranenburgh]</p></li>
+<li><p>Use pytest; fixes #23. [Andreas van Cranenburgh]</p></li>
+<li><p>Tweak order of badges. [Andreas van Cranenburgh]</p></li>
+<li><p>Makefile: default to Python 3. [Andreas van Cranenburgh]</p></li>
+<li><p>Update README, fix Makefile. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #22 from sarnold/missing-tests. [Andreas van
+Cranenburgh]</p>
+<p>add missing tests to sdist package, update readme and ci worflows (#1)</p>
+</li>
+<li><p>Fix pickle_test (tests.test_re.ReTests) … ERROR (run tests with
+nose) [Stephen L Arnold]</p></li>
+<li><p>Update changelog (and trigger ci rebuild) [Stephen L Arnold]</p></li>
+<li><p>Add missing tests to sdist package, update readme and ci worflows (#1)
+[Steve Arnold]</p>
+<p>readme: update badges, merge install sections, fix some rendering issues</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="v0-3-3-2021-01-26">
+<h2>v0.3.3 (2021-01-26)<a class="headerlink" href="#v0-3-3-2021-01-26" title="Link to this heading"></a></h2>
+<section id="id4">
+<h3>Changes<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Add .gitchangelog.rc and generated CHANGELOG.rst (keep HISTORY)
+[Stephen L Arnold]</p></li>
+<li><p>Ci: update wheel builds for Linux, Macos, and Windows. [Stephen L
+Arnold]</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Fixes<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Ci: make sure wheel path is correct for uploading. [Stephen L Arnold]</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Other<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Bump version. [Andreas van Cranenburgh]</p></li>
+<li><p>Update README.rst. fixes #21. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #20 from freepn/new-bld. [Andreas van Cranenburgh]</p>
+<p>New cmake and pybind11 build setup</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="v0-3-2-2020-12-16">
+<h2>v0.3.2 (2020-12-16)<a class="headerlink" href="#v0-3-2-2020-12-16" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Bump version. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #18 from freepn/github-ci. [Andreas van
+Cranenburgh]</p>
+<p>workaroud for manylinux dependency install error plus release automation</p>
+</li>
+</ul>
+</section>
+<section id="v0-3-1-2020-10-27">
+<h2>v0.3.1 (2020-10-27)<a class="headerlink" href="#v0-3-1-2020-10-27" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Bump version. [Andreas van Cranenburgh]</p></li>
+<li><p>Change package name for pypi. [Andreas van Cranenburgh]</p></li>
+</ul>
+</section>
+<section id="v0-3-2020-10-27">
+<h2>v0.3 (2020-10-27)<a class="headerlink" href="#v0-3-2020-10-27" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Bump version. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #14 from yoav-orca/master. [Andreas van
+Cranenburgh]</p>
+<p>Support building wheels automatically using github actions</p>
+</li>
+<li><p>Creating github actions for building wheels. [Yoav Alon]</p></li>
+<li><p>Created pyproject.toml. [Yoav Alon]</p>
+<p>Poetry and other modern build system need to know which build-tools to
+install prior to calling setup.py. added a pyproject.toml to specify
+cython as a dependency.</p>
+</li>
+<li><p>Add contains() method. [Andreas van Cranenburgh]</p>
+<ul class="simple">
+<li><p>contains() works like match() but returns a bool to avoid creating a
+Match object. see #12</p></li>
+<li><p>add wrapper for re.Pattern so that contains() and count() methods are
+also available when falling back to re.</p></li>
+</ul>
+</li>
+<li><p>Disable dubious tests. [Andreas van Cranenburgh]</p>
+<ul class="simple">
+<li><p>All tests pass.</p></li>
+<li><p>Don’t test for exotic/deprecated stuff such as non-initial flags in
+patterns and octal escapes without leading 0 or triple digits.</p></li>
+<li><p>Known corner cases no longer reported as failed tests.</p></li>
+<li><p>support b inside character class to mean backspace</p></li>
+<li><p>use re.error instead of defining subclass RegexError; ensures that
+exceptions can be caught both in re2 and in a potential fallback to re.</p></li>
+</ul>
+</li>
+<li><p>Disable failing test for known corner case. [Andreas van Cranenburgh]</p></li>
+<li><p>Remove tests with re.LOCALE flag since it is not allowed with str in
+Python 3.6+ [Andreas van Cranenburgh]</p></li>
+<li><p>Decode named groups even with bytes patterns; fixes #6. [Andreas van
+Cranenburgh]</p></li>
+<li><p>Make -std=c++11 the default; fixes #4. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #5 from mayk93/master. [Andreas van Cranenburgh]</p>
+<p>Adding c++ 11 compile flag on Ubuntu</p>
+</li>
+<li><p>Adding c++ 11 compile flag on Ubuntu. [Michael]</p></li>
+<li><p>Merge pull request #3 from podhmo/macports. [Andreas van Cranenburgh]</p>
+<p>macports support</p>
+</li>
+<li><p>Macports support. [podhmo]</p></li>
+<li><p>Use STL map for unicodeindices. [Andreas van Cranenburgh]</p></li>
+<li><p>Only translate unicode indices when needed. [Andreas van Cranenburgh]</p></li>
+<li><p>Update README. [Andreas van Cranenburgh]</p></li>
+<li><p>Add -std=c++11 only for clang, because gcc on CentOS 6 does not
+support it. [Andreas van Cranenburgh]</p></li>
+<li><p>Disable non-matched group tests; irrelevant after dad49cd. [Andreas
+van Cranenburgh]</p></li>
+<li><p>Merge pull request #2 from messense/master. [Andreas van Cranenburgh]</p>
+<p>Fix groupdict decode bug</p>
+</li>
+<li><p>Fix groupdict decode bug. [messense]</p></li>
+<li><p>Merge pull request #1 from pvaneynd/master. [Andreas van Cranenburgh]</p>
+<p>Ignore non-matched groups when replacing with sub</p>
+</li>
+<li><p>Ignore non-matched groups when replacing with sub. [Peter Van Eynde]</p>
+<p>From 3.5 onwards sub() and subn() now replace unmatched groups with
+empty strings. See:</p>
+<p><a class="reference external" href="https://docs.python.org/3/whatsnew/3.5.html#re">https://docs.python.org/3/whatsnew/3.5.html#re</a></p>
+<p>This change removes the ‘unmatched group’ error which occurs when using
+re2.</p>
+</li>
+<li><p>Fix setup.py unicode error. [Andreas van Cranenburgh]</p></li>
+<li><p>Add C++11 param; update URL. [Andreas van Cranenburgh]</p></li>
+<li><p>Fix bugs; ensure memory is released; simplify C++ interfacing;
+[Andreas van Cranenburgh]</p>
+<ul class="simple">
+<li><p>Fix bug causing zero-length matches to be returned multiple times</p></li>
+<li><p>Use Latin 1 encoding with RE2 when unicode not requested</p></li>
+<li><p>Ensure memory is released:
+- put del calls in finally blocks
+- add missing del call for ‘matches’ array</p></li>
+<li><p>Remove Cython hacks for C++ that are no longer needed;
+use const keyword that has been supported for some time.
+Fixes Cython 0.24 compilation issue.</p></li>
+<li><p>Turn _re2.pxd into includes.pxi.</p></li>
+<li><p>remove some tests that are specific to internal Python modules _sre and sre</p></li>
+</ul>
+</li>
+<li><p>Fix Match repr. [Andreas van Cranenburgh]</p></li>
+<li><p>Add tests for bug with \b. [Andreas van Cranenburgh]</p></li>
+<li><p>Document support syntax &amp;c. [Andreas van Cranenburgh]</p>
+<ul class="simple">
+<li><p>add reference of supported syntax to main docstring</p></li>
+<li><p>add __all__ attribute defining public members</p></li>
+<li><p>add re’s purge() function</p></li>
+<li><p>add tests for count method</p></li>
+<li><p>switch order of prepare_pattern() and _compile()</p></li>
+<li><p>rename prepare_pattern() to _prepare_pattern() to signal that it is
+semi-private</p></li>
+</ul>
+</li>
+<li><p>Add count method. [Andreas van Cranenburgh]</p>
+<ul class="simple">
+<li><p>add count method, equivalent to len(findall(…))</p></li>
+<li><p>use arrays in utf8indices</p></li>
+<li><p>tweak docstrings</p></li>
+</ul>
+</li>
+<li><p>Move functions around. [Andreas van Cranenburgh]</p></li>
+<li><p>Improve substitutions, Python 3 compatibility. [Andreas van
+Cranenburgh]</p>
+<ul class="simple">
+<li><p>when running under Python 3+, reject unicode patterns on
+bytes data, and vice versa, in according with general Python 3 behavior.</p></li>
+<li><p>improve Match.expand() implementation.</p></li>
+<li><p>The substitutions by RE2 behave differently from Python (character escapes,
+named groups, etc.), so use Match.expand() for anything but simple literal
+replacement strings.</p></li>
+<li><p>make groupindex of pattern objects public.</p></li>
+<li><p>add Pattern.fullmatch() method.</p></li>
+<li><p>use #define PY2 from setup.py instead of #ifdef hack.</p></li>
+<li><p>debug option for compilation.</p></li>
+<li><p>use data() instead of c_str() on C++ strings, and always supply length,
+so that strings with null characters are supported.</p></li>
+<li><p>bump minimum cython version due to use of bytearray typing</p></li>
+<li><p>adapt tests to Python 3; add b and u string prefixes where needed, &amp;c.</p></li>
+<li><p>update README</p></li>
+</ul>
+</li>
+<li><p>Add flags parameter to toplevel functions. [Andreas van Cranenburgh]</p></li>
+<li><p>Update performance table / missing features. [Andreas van Cranenburgh]</p></li>
+<li><p>Workaround for sub(…) with count &gt; 1. [Andreas van Cranenburgh]</p></li>
+<li><p>Handle named groups in replacement string; &amp;c. [Andreas van
+Cranenburgh]</p>
+<ul class="simple">
+<li><p>handle named groups in replacement string</p></li>
+<li><p>store index of named groups in Pattern object instead of Match object.</p></li>
+<li><p>use bytearray for result in _subn_callback</p></li>
+</ul>
+</li>
+<li><p>Pickle Patterns; non-char buffers; &amp;c. [Andreas van Cranenburgh]</p>
+<ul class="simple">
+<li><p>support pickling of Pattern objects</p></li>
+<li><p>support buffers from objects that do not support char buffer (e.g.,
+integer arrays); does not make a lot of sense, but this is what re does.</p></li>
+<li><p>enable benchmarks shown in readme by default; fix typo.</p></li>
+<li><p>fix typo in test_re.py</p></li>
+</ul>
+</li>
+<li><p>New buffer API; precompute groups/spans; &amp;c. [Andreas van Cranenburgh]</p>
+<ul class="simple">
+<li><p>use new buffer API
+NB: even though the old buffer interface is deprecated from Python 2.6,
+the new buffer interface is only supported on mmap starting from
+Python 3.</p></li>
+<li><p>avoid creating Match objects in findall()</p></li>
+<li><p>precompute groups and spans of Match objects, so that possibly encoded
+version of search string (bytestr / cstring) does not need to be kept.</p></li>
+<li><p>in _make_spans(), keep state for converting utf8 to unicode indices;
+so that there is no quadratic behavior on repeated invocations for
+different Match objects.</p></li>
+<li><p>release GIL in pattern_Replace / pattern_GlobalReplace</p></li>
+<li><p>prepare_pattern: loop over pattern as char *</p></li>
+<li><p>advertise Python 3 support in setup.py, remove python 2.5</p></li>
+</ul>
+</li>
+<li><p>Properly translate pos, endpos indices with unicode, &amp;c. [Andreas van
+Cranenburgh]</p>
+<ul class="simple">
+<li><p>properly translate pos, endpos indices with unicode</p></li>
+<li><p>keep original unicode string in Match objects</p></li>
+<li><p>separate compile.pxi file</p></li>
+</ul>
+</li>
+<li><p>Re-organize code. [Andreas van Cranenburgh]</p></li>
+<li><p>Minor changes. [Andreas van Cranenburgh]</p></li>
+<li><p>Python 2/3 compatibility, support buffer objects, &amp;c. [Andreas van
+Cranenburgh]</p>
+<ul class="simple">
+<li><p>Python 2/3 compatibility</p></li>
+<li><p>support searching in buffer objects (e.g., mmap)</p></li>
+<li><p>add module docstring</p></li>
+<li><p>some refactoring</p></li>
+<li><p>remove outdated Cython-generated file</p></li>
+<li><p>modify setup.py to cythonize as needed.</p></li>
+</ul>
+</li>
+<li><p>Implement finditer as generator. [Andreas van Cranenburgh]</p></li>
+<li><p>Merge pull request #31 from sunu/master. [Michael Axiak]</p>
+<p>Add Python 3 support.</p>
+</li>
+<li><p>Add Python 3 support. [Tarashish Mishra]</p></li>
+<li><p>Version bump. [Michael Axiak]</p></li>
+</ul>
+</section>
+<section id="release-0-2-22-2015-05-15">
+<h2>release/0.2.22 (2015-05-15)<a class="headerlink" href="#release-0-2-22-2015-05-15" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Version bump. [Michael Axiak]</p></li>
+<li><p>Merge pull request #22 from socketpair/release_gil_on_compile.
+[Michael Axiak]</p>
+<p>Release GIL during regex compilation.</p>
+</li>
+<li><p>Release GIL during regex compilation. [Коренберг Марк]</p>
+<p>(src/re2.cpp is not regenerated in this commit)</p>
+</li>
+</ul>
+</section>
+<section id="release-0-2-21-2015-05-14">
+<h2>release/0.2.21 (2015-05-14)<a class="headerlink" href="#release-0-2-21-2015-05-14" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Release bump. [Michael Axiak]</p></li>
+<li><p>Merge pull request #18 from offlinehacker/master. [Michael Axiak]</p>
+<p>setup.py: Continue with default lib paths if not detected automatically</p>
+</li>
+<li><p>Setup.py: Continue with default lib paths if not detected
+automatically. [Jaka Hudoklin]</p></li>
+<li><p>Fix issue #11. [Michael Axiak]</p></li>
+<li><p>Remove spurious print statement. [Michael Axiak]</p></li>
+<li><p>Added version check in setup.py to prevent people from shooting
+themselves in the foot trying to compile with an old cython version.
+[Michael Axiak]</p></li>
+</ul>
+</section>
+<section id="release-0-2-20-2011-11-15">
+<h2>release/0.2.20 (2011-11-15)<a class="headerlink" href="#release-0-2-20-2011-11-15" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Version bump to 0.2.20. [Michael Axiak]</p></li>
+<li><p>Version bump to 0.2.18 and use MANIFEST.in since python broke how
+sdist works in 2.7.1 (but fixes it in 2.7.3…) [Michael Axiak]</p></li>
+</ul>
+</section>
+<section id="release-0-2-16-2011-11-08">
+<h2>release/0.2.16 (2011-11-08)<a class="headerlink" href="#release-0-2-16-2011-11-08" title="Link to this heading"></a></h2>
+<section id="id7">
+<h3>Fixes<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Unmatched group span (-1,-1) caused exception in _convert_pos. [Israel
+Tsadok]</p></li>
+<li><p>Last item in qualified split included the item before last. [Israel
+Tsadok]</p></li>
+<li><p>Exception in callback would cause a memory leak. [Israel Tsadok]</p></li>
+<li><p>Group spans need to be translated to their relative decoded positions.
+[Israel Tsadok]</p></li>
+<li><p>This is not what verbose means in this context. [Israel Tsadok]</p></li>
+<li><p>Findall used group(0) instead of group(1) when there was a group.
+[Israel Tsadok]</p></li>
+<li><p>Dangling reference when _subn_callback breaks on limit. [Israel
+Tsadok]</p></li>
+<li><p>Infinite loop in pathological case of findall(“.*”, “foo”) [Israel
+Tsadok]</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Other<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Version bump to 0.2.16. [Michael Axiak]</p></li>
+<li><p>Merged itsadok’s changes to fix treatment of D and W. Added tests to
+reflection issue #4. [Michael Axiak]</p></li>
+<li><p>Fixed issue #5, support W, S and D. [Israel Tsadok]</p></li>
+<li><p>Fixed issue #3, changed code to work with new re2 api. [Michael Axiak]</p></li>
+<li><p>Merge branch ‘itsadok-master’ [Michael Axiak]</p></li>
+<li><p>Merge branch ‘master’ of <a class="reference external" href="https://github.com/itsadok/pyre2">https://github.com/itsadok/pyre2</a> into
+itsadok-master. [Michael Axiak]</p></li>
+<li><p>Failing tests for pos and endpos. [Israel Tsadok]</p></li>
+<li><p>Set default notification to FALLBACK_QUIETLY, as per the
+documentation. [Israel Tsadok]</p></li>
+<li><p>Get rid of deprecation warning. [Israel Tsadok]</p></li>
+<li><p>Fix hang on findall(‘’, ‘x’) [Israel Tsadok]</p></li>
+<li><p>Allow weak reference to Pattern object. [Israel Tsadok]</p></li>
+<li><p>Allow named groups in span(), convert all unicode positions in one
+scan. [Israel Tsadok]</p></li>
+<li><p>Added failing test for named groups. [Israel Tsadok]</p></li>
+<li><p>Fix lastgroup and lastindex. [Israel Tsadok]</p></li>
+<li><p>Verify that flags do not get silently ignored with compiled patterns.
+[Israel Tsadok]</p></li>
+<li><p>Had to cheat on a test, since we can’t support arbitrary bytes.
+[Israel Tsadok]</p></li>
+<li><p>Fix lastindex. [Israel Tsadok]</p></li>
+<li><p>Pass some more tests - added pos, endpos, regs, re attributes to Match
+object. [Israel Tsadok]</p></li>
+<li><p>Added max_mem parameter, bumped version to 0.2.13. [Michael Axiak]</p></li>
+<li><p>Remove spurious get_authors() call. [Michael Axiak]</p></li>
+<li><p>Added Alex to the authors file. [Michael Axiak]</p></li>
+<li><p>Version bumped to 0.2.11. [Michael Axiak]</p></li>
+<li><p>Added difference in version to changelist, added AUTHORS parsing to
+setup.py. [Michael Axiak]</p></li>
+<li><p>Added check for array, added synonym ‘error’ for RegexError to help
+pass more python tests. [Michael Axiak]</p></li>
+<li><p>Made make test run a little nicer. [Michael Axiak]</p></li>
+<li><p>Added note about copyright assignment to authors. [Michael Axiak]</p></li>
+<li><p>Fix test_re_match. [Israel Tsadok]</p></li>
+<li><p>Fix test_bug_1140. [Israel Tsadok]</p></li>
+<li><p>Update readme. [Israel Tsadok]</p></li>
+<li><p>Preprocess pattern to match re2 quirks. Fixes several bugs. [Israel
+Tsadok]</p></li>
+<li><p>Re2 doesn’t like when you escape non-ascii chars. [Israel Tsadok]</p></li>
+<li><p>Merge remote branch ‘moreati/master’ [Israel Tsadok]</p></li>
+<li><p>Merge from axiak/HEAD. [Alex Willmer]</p></li>
+<li><p>Merge from axiak/master. [Alex Willmer]</p></li>
+<li><p>Pass ErrorBadEscape patterns to re.compile(). Have re.compile() accept
+SRE objects. [Alex Willmer]</p></li>
+<li><p>Ignore .swp files. [Alex Willmer]</p></li>
+<li><p>Remove superfluous differences to axiak/master. [Alex Willmer]</p></li>
+<li><p>Merge remote branch ‘upstream/master’ [Alex Willmer]</p></li>
+<li><p>Merge changes from axiak master. [Alex Willmer]</p></li>
+<li><p>Fix previous additions to setup.py. [Alex Willmer]</p></li>
+<li><p>Add url to setup.py. [Alex Willmer]</p></li>
+<li><p>Remove #! line from re.py module, since it isn’t a script. [Alex
+Willmer]</p></li>
+<li><p>Add classifers and long description to setup.py. [Alex Willmer]</p></li>
+<li><p>Add MANIFEST.in. [Alex Willmer]</p></li>
+<li><p>Merge branch ‘master’ of git://github.com/facebook/pyre2. [Alex
+Willmer]</p>
+<dl class="simple">
+<dt>Conflicts:</dt><dd><p>re2.py</p>
+</dd>
+</dl>
+</li>
+<li><p>Ignore byte compiled python files. [Alex Willmer]</p></li>
+<li><p>Add copyright, license, and three convenience functions to re2.py.
+[Alex Willmer]</p></li>
+<li><p>Switch re2.h include to angle brackets. [Alex Willmer]</p></li>
+<li><p>Handle n in replace template, since re2 doesn’t. [Israel Tsadok]</p></li>
+<li><p>Import escape function as it from re. [Israel Tsadok]</p></li>
+<li><p>The unicode char classes never worked. TIL testing is important.
+[Israel Tsadok]</p></li>
+<li><p>Make unicode stickyness rules like in re module. [Israel Tsadok]</p></li>
+<li><p>Return an iterator from finditer. [Israel Tsadok]</p></li>
+<li><p>Have re.compile() accept SRE objects. (copied from moreati’s fork)
+[Israel Tsadok]</p></li>
+<li><p>Fix var name mixup. [Israel Tsadok]</p></li>
+<li><p>Added self to authors. [Israel Tsadok]</p></li>
+<li><p>Fix memory leak. [Israel Tsadok]</p></li>
+<li><p>Added re unit test from python2.6. [Israel Tsadok]</p></li>
+<li><p>Make match group allocation more RAII style. [Israel Tsadok]</p></li>
+<li><p>Use None for unused groups in split. [Israel Tsadok]</p></li>
+<li><p>Change split to match sre.c implementation, and handle empty matches.
+[Israel Tsadok]</p></li>
+<li><p>Match delete[] to new[] calls. [Israel Tsadok]</p></li>
+<li><p>Added group property to match re API. [Israel Tsadok]</p></li>
+<li><p>Use appropriate char classes in case of re.UNICODE. [Israel Tsadok]</p></li>
+<li><p>Fall back on re in case of back references. [Israel Tsadok]</p></li>
+<li><p>Use unmangled pattern in case of fallback to re. [Israel Tsadok]</p></li>
+<li><p>Simplistic cache, copied from re.py. [Israel Tsadok]</p></li>
+<li><p>Fix some memory leaks. [Israel Tsadok]</p></li>
+<li><p>Allow multiple arguments to group() [Israel Tsadok]</p></li>
+<li><p>Allow multiple arguments to group() [Israel Tsadok]</p></li>
+<li><p>Fixed path issues. [Michael Axiak]</p></li>
+<li><p>Added flags to pattern object, bumped version number. [Michael Axiak]</p></li>
+<li><p>Change import path to fix include dirs. [Michael Axiak]</p></li>
+<li><p>Updated manifest and changelog. [Michael Axiak]</p></li>
+<li><p>Added .expand() to group objects. [Michael Axiak]</p></li>
+<li><p>Removed the excessive thanks. [Michael Axiak]</p></li>
+<li><p>Added regex module to performance tests. [Michael Axiak]</p></li>
+<li><p>Pattern objects should be able to return the input pattern. [Alec
+Berryman]</p>
+<p>I’m just storing the original object passed in (found it could be str or
+unicode - thanks, unicode tests!).  It could be calculated if important
+to save space.</p>
+</li>
+<li><p>Further findall fix: one-match finds. [Alec Berryman]</p>
+<p>I read the spec more carefully this time.</p>
+</li>
+<li><p>Added changelist file for future releases. [Michael Axiak]</p></li>
+<li><p>Added alec to AUTHORS. Bumped potential version number. Fixed findall
+support to work without closures. [Michael Axiak]</p></li>
+<li><p>Make pyre2 64-bit safe. [Alec Berryman]</p>
+<p>Now compiles on a 64-bit system; previously, complained that you might
+have a string size that couldn’t fit into an int.  Py_ssize_t is
+required instead of plain size_t because Python’s is signed.</p>
+</li>
+<li><p>Fix findall behavior to match re. [Alec Berryman]</p>
+<p>findall is to return a list of strings or tuples of strings, while
+finditer is to return an iterator of match objects; previously both were
+returning lists of match objects.  findall was fixed, but finditer is
+still returning a list.</p>
+<p>New tests.</p>
+</li>
+<li><p>Makefile: test target. [Alec Berryman]</p></li>
+<li><p>Note Cython 0.13 dependency. [Alec Berryman]</p></li>
+<li><p>Moved to my own license. I can do that since I started the code from
+scratch. [Michael Axiak]</p></li>
+<li><p>Fix formatting of table. [Michael Axiak]</p></li>
+<li><p>Added number of trials, fixed some wording. [Michael Axiak]</p></li>
+<li><p>Added missing files to MANIFEST. [Michael Axiak]</p></li>
+<li><p>Added performance testing, bumped version number. [Michael Axiak]</p></li>
+<li><p>Added readme data. [Michael Axiak]</p></li>
+<li><p>Updated installation language. [Michael Axiak]</p></li>
+<li><p>Incremented version number. [Michael Axiak]</p></li>
+<li><p>Fixed split regression with missing unicode translation. [Michael
+Axiak]</p></li>
+<li><p>Maybe utf8 works? [Michael Axiak]</p></li>
+<li><p>Got unicode to past broken test. [Michael Axiak]</p></li>
+<li><p>Added debug message for issue with decoding. [Michael Axiak]</p></li>
+<li><p>Added more utf8 stuff. [Michael Axiak]</p></li>
+<li><p>Delay group construction for faster match testing. [Michael Axiak]</p></li>
+<li><p>Got utf8 support to work. [Michael Axiak]</p></li>
+<li><p>Starting to add unicode support… BROKEN. [Michael Axiak]</p></li>
+<li><p>Added fallback and notification. [Michael Axiak]</p></li>
+<li><p>Added runtime library path to fix /usr/local/ bug for installation of
+re2 library. [Michael Axiak]</p></li>
+<li><p>Fixed setup and updated readme. [Michael Axiak]</p></li>
+<li><p>Added more setup.py antics. [Michael Axiak]</p></li>
+<li><p>Added ancillary stuff. [Michael Axiak]</p></li>
+<li><p>Added sub, subn, findall, finditer, split. Bam. [Michael Axiak]</p></li>
+<li><p>Added finditer along with tests. [Michael Axiak]</p></li>
+<li><p>Fix rst. [Michael Axiak]</p></li>
+<li><p>Added contact link to readme. [Michael Axiak]</p></li>
+<li><p>Fixed formatting for readme. [Michael Axiak]</p></li>
+<li><p>Added lastindex, lastgroup, and updated README file. [Michael Axiak]</p></li>
+<li><p>Added some simple tests. Got match() to work, named groups to work.
+spanning to work. pretty much at the same level as pyre2 proper.
+[Michael Axiak]</p></li>
+<li><p>Added more things to gitignore, another compile. [Michael Axiak]</p></li>
+<li><p>Move code to src directory for better sanity. [Michael Axiak]</p></li>
+<li><p>Updated re2 module to use Cython instead, got matching working almost
+completely with minimal flag support. [Michael Axiak]</p></li>
+<li><p>Suppress logging of failed pattern compilation. [David Reiss]</p>
+<p>This isn’t necessary in Python since errors are reported by exceptions.
+Use a slightly more verbose form to allow easier setting of more options
+later.</p>
+</li>
+<li><p>Don’t define tp_new for regexps and matches. [David Reiss]</p>
+<p>It turns out that these are not required to use PyObject_New.  They are
+only required to allow Python code to call the type to create a new
+instance, which I don’t want to allow.  Remove them.</p>
+</li>
+<li><p>Fix a segfault by initializing attr_dict to NULL. [David Reiss]</p>
+<p>I thought PyObject_New would call my tp_new, which is set to
+PyType_GenericNew, which NULLs out all user-defined fields (actually
+memset, but the docs say NULL).  However, this appears to not be the
+case.  Explicitly NULL out attr_dict in create_regexp to avoid segfaults
+when compiling a bad pattern.  Do it for create_match too for future
+safety, even though it is not required with the current code.</p>
+</li>
+<li><p>Add struct tags for easier debugging with gdb. [David Reiss]</p>
+<p>See <a class="reference external" href="http://sourceware.org/ml/archer/2009-q1/msg00085.html">http://sourceware.org/ml/archer/2009-q1/msg00085.html</a> for a little
+more information.</p>
+</li>
+<li><p>Add some convenience functions to re2.py. [Alex Willmer]</p></li>
+<li><p>Add a copyright and license comment to re2.py. [David Reiss]</p>
+<p>This is to prepare for adding some not-totally-trivial code to it.</p>
+</li>
+<li><p>Use PEP-8-compliant 4-space indent in re2.py. [David Reiss]</p></li>
+<li><p>Use angle-brackets for the re2.h include. [Alex Willmer]</p></li>
+<li><p>Add build information to the README. [David Reiss]</p></li>
+<li><p>Add contact info to README. [David Reiss]</p></li>
+<li><p>Initial commit of pyre2. [David Reiss]</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api/re2.html" class="btn btn-neutral float-left" title="re2 module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Andreas van Cranenburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

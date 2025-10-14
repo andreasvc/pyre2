@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyre2: Python RE2 wrapper for linear-time regular expressions &mdash; pyre2 0.3.11.dev5+ge83fc4d04 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f263d1f0"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src" href="api/modules.html" />
+    <link rel="prev" title="Welcome to the Pyre2 documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pyre2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyre2: Python RE2 wrapper for linear-time regular expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#compiling-from-source">Compiling from source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-agnostic-building-with-conda">Platform-agnostic building with conda</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backwards-compatibility">Backwards Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unicode-support">Unicode Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#performance">Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#current-status">Current Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyre2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pyre2: Python RE2 wrapper for linear-time regular expressions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyre2-python-re2-wrapper-for-linear-time-regular-expressions">
+<h1><a class="toc-backref" href="#table-of-contents" role="doc-backlink">pyre2: Python RE2 wrapper for linear-time regular expressions</a><a class="headerlink" href="#pyre2-python-re2-wrapper-for-linear-time-regular-expressions" title="Link to this heading"></a></h1>
+<a class="reference external image-reference" href="https://github.com/andreasvc/pyre2/actions?query=workflow:Build"><img alt="Build CI Status" src="https://github.com/andreasvc/pyre2/workflows/Build/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/andreasvc/pyre2/actions?query=workflow:Release"><img alt="Release CI Status" src="https://github.com/andreasvc/pyre2/workflows/Release/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/andreasvc/pyre2/releases"><img alt="GitHub tag (latest SemVer, including pre-release)" src="https://img.shields.io/github/v/tag/andreasvc/pyre2?color=green&amp;include_prereleases&amp;label=latest%20release" />
+</a>
+<a class="reference external image-reference" href="https://badge.fury.io/py/pyre2:alt:Pypiversion"><img alt="https://badge.fury.io/py/pyre2.svg" src="https://badge.fury.io/py/pyre2.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/andreasvc/pyre2/actions/workflows/conda-dev.yml"><img alt="Conda CI Status" src="https://github.com/andreasvc/pyre2/actions/workflows/conda-dev.yml/badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://github.com/andreasvc/pyre2/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/andreasvc/pyre2" />
+</a>
+<a class="reference external image-reference" href="https://www.python.org/downloads/"><img alt="Python version" src="https://img.shields.io/badge/python-3.6+-blue.svg" />
+</a>
+<a class="reference external image-reference" href="https://anaconda.org/conda-forge/pyre2"><img alt="version" src="https://anaconda.org/conda-forge/pyre2/badges/version.svg" />
+</a>
+<a class="reference external image-reference" href="https://anaconda.org/conda-forge/pyre2"><img alt="platforms" src="https://anaconda.org/conda-forge/pyre2/badges/platforms.svg" />
+</a>
+<a class="reference external image-reference" href="https://anaconda.org/conda-forge/pyre2"><img alt="downloads" src="https://anaconda.org/conda-forge/pyre2/badges/downloads.svg" />
+</a>
+<nav class="contents" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pyre2-python-re2-wrapper-for-linear-time-regular-expressions" id="id1">pyre2: Python RE2 wrapper for linear-time regular expressions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#summary" id="id2">Summary</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id3">Installation</a></p></li>
+<li><p><a class="reference internal" href="#documentation" id="id4">Documentation</a></p></li>
+<li><p><a class="reference internal" href="#backwards-compatibility" id="id5">Backwards Compatibility</a></p></li>
+<li><p><a class="reference internal" href="#unicode-support" id="id6">Unicode Support</a></p></li>
+<li><p><a class="reference internal" href="#performance" id="id7">Performance</a></p></li>
+<li><p><a class="reference internal" href="#current-status" id="id8">Current Status</a></p></li>
+<li><p><a class="reference internal" href="#tests" id="id9">Tests</a></p></li>
+<li><p><a class="reference internal" href="#credits" id="id10">Credits</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="summary">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<p>pyre2 is a Python extension that wraps
+<a class="reference external" href="https://github.com/google/re2">Google’s RE2 regular expression library</a>.
+The RE2 engine compiles (strictly) regular expressions to
+deterministic finite automata, which guarantees linear-time behavior.</p>
+<p>Intended as a drop-in replacement for <code class="docutils literal notranslate"><span class="pre">re</span></code>. Unicode is supported by encoding
+to UTF-8, and bytes strings are treated as UTF-8 when the UNICODE flag is given.
+For best performance, work with UTF-8 encoded bytes strings.</p>
+</section>
+<section id="installation">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>Normal usage for Linux/Mac/Windows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install pyre2
+</pre></div>
+</div>
+<section id="compiling-from-source">
+<h3>Compiling from source<a class="headerlink" href="#compiling-from-source" title="Link to this heading"></a></h3>
+<p>Requirements for building the C++ extension from the repo source:</p>
+<ul class="simple">
+<li><p>A build environment with <code class="docutils literal notranslate"><span class="pre">gcc</span></code> or <code class="docutils literal notranslate"><span class="pre">clang</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">build-essential</span></code>)</p></li>
+<li><p>Build tools and libraries: RE2, pybind11, and cmake installed in the build
+environment.</p>
+<ul>
+<li><p>On Ubuntu/Debian: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">build-essential</span> <span class="pre">cmake</span> <span class="pre">ninja-build</span> <span class="pre">python3-dev</span> <span class="pre">cython3</span> <span class="pre">pybind11-dev</span> <span class="pre">libre2-dev</span></code></p></li>
+<li><p>On Gentoo, install dev-util/cmake, dev-python/pybind11, and dev-libs/re2</p></li>
+<li><p>For a venv you can install the pybind11, cmake, and cython packages from PyPI</p></li>
+</ul>
+</li>
+</ul>
+<p>On MacOS, use the <code class="docutils literal notranslate"><span class="pre">brew</span></code> package manager:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ brew install -s re2 pybind11
+</pre></div>
+</div>
+<p>On Windows use the <code class="docutils literal notranslate"><span class="pre">vcpkg</span></code> package manager:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vcpkg install re2:x64-windows pybind11:x64-windows
+</pre></div>
+</div>
+<p>You can pass some cmake environment variables to alter the build type or
+pass a toolchain file (the latter is required on Windows) or specify the
+cmake generator.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ CMAKE_GENERATOR=&quot;Unix Makefiles&quot; CMAKE_TOOLCHAIN_FILE=clang_toolchain.cmake tox -e deploy
+</pre></div>
+</div>
+<p>For development, get the source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git://github.com/andreasvc/pyre2.git
+$ cd pyre2
+$ make install
+</pre></div>
+</div>
+</section>
+<section id="platform-agnostic-building-with-conda">
+<h3>Platform-agnostic building with conda<a class="headerlink" href="#platform-agnostic-building-with-conda" title="Link to this heading"></a></h3>
+<p>An alternative to the above is provided via the <a class="reference external" href="https://anaconda.org/conda-forge/pyre2">conda</a> recipe (use the
+<a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda installer</a> if you don’t have <code class="docutils literal notranslate"><span class="pre">conda</span></code> installed already).</p>
+</section>
+</section>
+<section id="documentation">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Documentation</a><a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
+<p>Consult the documentation</p>
+<ul class="simple">
+<li><p>online: <a class="reference external" href="http://andreasvc.github.io/pyre2/">http://andreasvc.github.io/pyre2/</a></p></li>
+<li><p>interactively through ipython or <code class="docutils literal notranslate"><span class="pre">pydoc</span> <span class="pre">re2</span></code> etc.</p></li>
+<li><p>in the source code as docstrings.</p></li>
+</ul>
+</section>
+<section id="backwards-compatibility">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Backwards Compatibility</a><a class="headerlink" href="#backwards-compatibility" title="Link to this heading"></a></h2>
+<p>The stated goal of this module is to be a drop-in replacement for <code class="docutils literal notranslate"><span class="pre">re</span></code>, i.e.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">re2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">re</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+</pre></div>
+</div>
+<p>That being said, there are features of the <code class="docutils literal notranslate"><span class="pre">re</span></code> module that this module may
+never have; these will be handled through fallback to the original <code class="docutils literal notranslate"><span class="pre">re</span></code> module:</p>
+<ul class="simple">
+<li><p>lookahead assertions <code class="docutils literal notranslate"><span class="pre">(?!...)</span></code></p></li>
+<li><p>backreferences, e.g., <code class="docutils literal notranslate"><span class="pre">\\1</span></code> in search pattern</p></li>
+<li><p>possessive quantifiers <code class="docutils literal notranslate"><span class="pre">*+,</span> <span class="pre">++,</span> <span class="pre">?+,</span> <span class="pre">{m,n}+</span></code></p></li>
+<li><p>atomic groups <code class="docutils literal notranslate"><span class="pre">(?&gt;...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\W</span></code> and <code class="docutils literal notranslate"><span class="pre">\S</span></code> not supported inside character classes</p></li>
+</ul>
+<p>On the other hand, unicode character classes are supported (e.g., <code class="docutils literal notranslate"><span class="pre">\p{Greek}</span></code>).
+Syntax reference: <a class="reference external" href="https://github.com/google/re2/wiki/Syntax">https://github.com/google/re2/wiki/Syntax</a></p>
+<p>However, there are times when you may want to be notified of a failover. The
+function <code class="docutils literal notranslate"><span class="pre">set_fallback_notification</span></code> determines the behavior in these cases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">re2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">re</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">set_fallback_notification</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">FALLBACK_WARNING</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">set_fallback_notification</span></code> takes three values:
+<code class="docutils literal notranslate"><span class="pre">re.FALLBACK_QUIETLY</span></code> (default), <code class="docutils literal notranslate"><span class="pre">re.FALLBACK_WARNING</span></code> (raise a warning),
+and <code class="docutils literal notranslate"><span class="pre">re.FALLBACK_EXCEPTION</span></code> (raise an exception).</p>
+<p>You might also change the fallback module from <code class="docutils literal notranslate"><span class="pre">re</span></code> (default) to something
+else, like <code class="docutils literal notranslate"><span class="pre">regex</span></code>. You can achieve that with the function
+<code class="docutils literal notranslate"><span class="pre">set_fallback_module</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">re2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re2</span><span class="o">.</span><span class="n">set_fallback_notification</span><span class="p">(</span><span class="n">re2</span><span class="o">.</span><span class="n">FALLBACK_WARNING</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">re2</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;foo&quot;</span><span class="p">))</span>
+<span class="go">&lt;class &#39;re2.Pattern&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">re2</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;foo(?!bar)&quot;</span><span class="p">))</span>
+<span class="go">&lt;stdin&gt;:1: UserWarning: WARNING: Using re module. Reason: invalid perl operator: (?!</span>
+<span class="go">&lt;class &#39;re2.FallbackPattern&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">regex</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re2</span><span class="o">.</span><span class="n">set_fallback_module</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">re2</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;foo(?!bar)&quot;</span><span class="p">))</span>
+<span class="go">&lt;stdin&gt;:1: UserWarning: WARNING: Using regex module. Reason: invalid perl operator: (?!</span>
+<span class="go">&lt;class &#39;re2.FallbackPattern&#39;&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="unicode-support">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Unicode Support</a><a class="headerlink" href="#unicode-support" title="Link to this heading"></a></h2>
+<p>Python <code class="docutils literal notranslate"><span class="pre">bytes</span></code> and <code class="docutils literal notranslate"><span class="pre">unicode</span></code> strings are fully supported, but note that
+<code class="docutils literal notranslate"><span class="pre">RE2</span></code> works with UTF-8 encoded strings under the hood, which means that
+<code class="docutils literal notranslate"><span class="pre">unicode</span></code> strings need to be encoded and decoded back and forth.
+There are two important factors:</p>
+<ul class="simple">
+<li><p>whether a <code class="docutils literal notranslate"><span class="pre">unicode</span></code> pattern and search string is used (will be encoded to UTF-8 internally)</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">UNICODE</span></code> flag: whether operators such as <code class="docutils literal notranslate"><span class="pre">\w</span></code> recognize Unicode characters.</p></li>
+</ul>
+<p>To avoid the overhead of encoding and decoding to UTF-8, it is possible to pass
+UTF-8 encoded bytes strings directly but still treat them as <code class="docutils literal notranslate"><span class="pre">unicode</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="n">re2</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;\w&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">),</span> <span class="sa">u</span><span class="s1">&#39;Mötley Crüe&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">re2</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\xc3\xb6</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\xc3\xbc</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">]</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="n">re2</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;\w&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">),</span> <span class="sa">u</span><span class="s1">&#39;Mötley Crüe&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>However, note that the indices in <code class="docutils literal notranslate"><span class="pre">Match</span></code> objects will refer to the bytes string.
+The indices of the match in the <code class="docutils literal notranslate"><span class="pre">unicode</span></code> string could be computed by
+decoding/encoding, but this is done automatically and more efficiently if you
+pass the <code class="docutils literal notranslate"><span class="pre">unicode</span></code> string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">re2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;ü&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">),</span> <span class="sa">u</span><span class="s1">&#39;Mötley Crüe&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">re2</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="go">&lt;re2.Match object; span=(10, 12), match=&#39;\xc3\xbc&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;ü&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Mötley Crüe&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re2</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="go">&lt;re2.Match object; span=(9, 10), match=u&#39;\xfc&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Finally, if you want to match bytes without regard for Unicode characters,
+pass bytes strings and leave out the <code class="docutils literal notranslate"><span class="pre">UNICODE</span></code> flag (this will cause Latin 1
+encoding to be used with <code class="docutils literal notranslate"><span class="pre">RE2</span></code> under the hood):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">re2</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">br</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x80\x81\x82</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">[&#39;\x80&#39;, &#39;\x81&#39;, &#39;\x82&#39;]</span>
+</pre></div>
+</div>
+</section>
+<section id="performance">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Performance</a><a class="headerlink" href="#performance" title="Link to this heading"></a></h2>
+<p>Performance is of course the point of this module, so it better perform well.
+Regular expressions vary widely in complexity, and the salient feature of <code class="docutils literal notranslate"><span class="pre">RE2</span></code> is
+that it behaves well asymptotically. This being said, for very simple substitutions,
+I’ve found that occasionally python’s regular <code class="docutils literal notranslate"><span class="pre">re</span></code> module is actually slightly faster.
+However, when the <code class="docutils literal notranslate"><span class="pre">re</span></code> module gets slow, it gets <em>really</em> slow, while this module
+buzzes along.</p>
+<p>In the below example, I’m running the data against 8MB of text from the colossal Wikipedia
+XML file. I’m running them multiple times, being careful to use the <code class="docutils literal notranslate"><span class="pre">timeit</span></code> module.
+To see more details, please see the <a class="reference external" href="http://github.com/andreasvc/pyre2/tree/master/tests/performance.py">performance script</a>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Test</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p># total runs</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">re</span></code> time(s)</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">re2</span></code> time(s)</p></th>
+<th class="head"><p>% <code class="docutils literal notranslate"><span class="pre">re</span></code> time</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">regex</span></code> time(s)</p></th>
+<th class="head"><p>% <code class="docutils literal notranslate"><span class="pre">regex</span></code> time</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Findall URI|Email</p></td>
+<td><p>Find list of ‘([a-zA-Z][a-zA-Z0-9]*)://([^ /]+)(/[^ ]*)?|([^ &#64;]+)&#64;([^ &#64;]+)’</p></td>
+<td><p>2</p></td>
+<td><p>6.262</p></td>
+<td><p>0.131</p></td>
+<td><p>2.08%</p></td>
+<td><p>5.119</p></td>
+<td><p>2.55%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Replace WikiLinks</p></td>
+<td><p>This test replaces links of the form [[Obama|Barack_Obama]] to Obama.</p></td>
+<td><p>100</p></td>
+<td><p>4.374</p></td>
+<td><p>0.815</p></td>
+<td><p>18.63%</p></td>
+<td><p>1.176</p></td>
+<td><p>69.33%</p></td>
+</tr>
+<tr class="row-even"><td><p>Remove WikiLinks</p></td>
+<td><p>This test splits the data by the &lt;page&gt; tag.</p></td>
+<td><p>100</p></td>
+<td><p>4.153</p></td>
+<td><p>0.225</p></td>
+<td><p>5.43%</p></td>
+<td><p>0.537</p></td>
+<td><p>42.01%</p></td>
+</tr>
+</tbody>
+</table>
+<p>Feel free to add more speed tests to the bottom of the script and send a pull request my way!</p>
+</section>
+<section id="current-status">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Current Status</a><a class="headerlink" href="#current-status" title="Link to this heading"></a></h2>
+<p>The tests show the following differences with Python’s <code class="docutils literal notranslate"><span class="pre">re</span></code> module:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">$</span></code> operator in Python’s <code class="docutils literal notranslate"><span class="pre">re</span></code> matches twice if the string ends
+with <code class="docutils literal notranslate"><span class="pre">\n</span></code>. This can be simulated using <code class="docutils literal notranslate"><span class="pre">\n?$</span></code>, except when doing
+substitutions.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">pyre2</span></code> module and Python’s <code class="docutils literal notranslate"><span class="pre">re</span></code> may behave differently with nested groups.
+See <code class="docutils literal notranslate"><span class="pre">tests/test_emptygroups.txt</span></code> for the examples.</p></li>
+</ul>
+<p>Please report any further issues with <code class="docutils literal notranslate"><span class="pre">pyre2</span></code>.</p>
+</section>
+<section id="tests">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Tests</a><a class="headerlink" href="#tests" title="Link to this heading"></a></h2>
+<p>If you would like to help, one thing that would be very useful
+is writing comprehensive tests for this. It’s actually really easy:</p>
+<ul class="simple">
+<li><p>Come up with regular expression problems using the regular python ‘re’ module.</p></li>
+<li><p>Write a session in python traceback format <a class="reference external" href="http://github.com/andreasvc/pyre2/blob/master/tests/test_search.txt">Example</a>.</p></li>
+<li><p>Replace your <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">re</span></code> with <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">re2</span> <span class="pre">as</span> <span class="pre">re</span></code>.</p></li>
+<li><p>Save it with as <code class="docutils literal notranslate"><span class="pre">test_&lt;name&gt;.txt</span></code> in the tests directory. You can comment on it however you like and indent the code with 4 spaces.</p></li>
+</ul>
+</section>
+<section id="credits">
+<h2><a class="toc-backref" href="#table-of-contents" role="doc-backlink">Credits</a><a class="headerlink" href="#credits" title="Link to this heading"></a></h2>
+<p>This code builds on the following projects (in chronological order):</p>
+<ul class="simple">
+<li><p>Google’s RE2 regular expression library: <a class="reference external" href="https://github.com/google/re2">https://github.com/google/re2</a></p></li>
+<li><p>Facebook’s pyre2 github repository: <a class="reference external" href="http://github.com/facebook/pyre2/">http://github.com/facebook/pyre2/</a></p></li>
+<li><p>Mike Axiak’s Cython version of this: <a class="reference external" href="http://github.com/axiak/pyre2/">http://github.com/axiak/pyre2/</a> (seems not actively maintained)</p></li>
+<li><p>This fork adds Python 3 support and other improvements.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to the Pyre2 documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="src" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Andreas van Cranenburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

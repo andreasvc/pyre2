@@ -1,0 +1,196 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to the Pyre2 documentation! &mdash; pyre2 0.3.11.dev5+ge83fc4d04 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f263d1f0"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyre2: Python RE2 wrapper for linear-time regular expressions" href="README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            pyre2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">pyre2: Python RE2 wrapper for linear-time regular expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pyre2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to the Pyre2 documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-the-pyre2-documentation">
+<h1>Welcome to the Pyre2 documentation!<a class="headerlink" href="#welcome-to-the-pyre2-documentation" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">pyre2: Python RE2 wrapper for linear-time regular expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="README.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="README.html#compiling-from-source">Compiling from source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#platform-agnostic-building-with-conda">Platform-agnostic building with conda</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#backwards-compatibility">Backwards Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#unicode-support">Unicode Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#performance">Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#current-status">Current Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">src</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/re2.html">re2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.BackreferencesException"><code class="docutils literal notranslate"><span class="pre">BackreferencesException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.CharClassProblemException"><code class="docutils literal notranslate"><span class="pre">CharClassProblemException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.Match"><code class="docutils literal notranslate"><span class="pre">Match</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.Pattern"><code class="docutils literal notranslate"><span class="pre">Pattern</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.RegexError"><code class="docutils literal notranslate"><span class="pre">RegexError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.SREPattern"><code class="docutils literal notranslate"><span class="pre">SREPattern</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.count"><code class="docutils literal notranslate"><span class="pre">count()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.error"><code class="docutils literal notranslate"><span class="pre">error</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.escape"><code class="docutils literal notranslate"><span class="pre">escape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.findall"><code class="docutils literal notranslate"><span class="pre">findall()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.finditer"><code class="docutils literal notranslate"><span class="pre">finditer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.fullmatch"><code class="docutils literal notranslate"><span class="pre">fullmatch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.match"><code class="docutils literal notranslate"><span class="pre">match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.purge"><code class="docutils literal notranslate"><span class="pre">purge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.search"><code class="docutils literal notranslate"><span class="pre">search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.set_fallback_notification"><code class="docutils literal notranslate"><span class="pre">set_fallback_notification()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.split"><code class="docutils literal notranslate"><span class="pre">split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.sub"><code class="docutils literal notranslate"><span class="pre">sub()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/re2.html#re2.subn"><code class="docutils literal notranslate"><span class="pre">subn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#v0-3-6-29-g1465367">v0.3.6-29-g1465367</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#changes">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#fixes">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#other">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#v0-3-6-2021-05-05">v0.3.6 (2021-05-05)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#v0-3-4-2021-04-10">v0.3.4 (2021-04-10)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id1">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id2">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id3">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#v0-3-3-2021-01-26">v0.3.3 (2021-01-26)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id4">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id5">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id6">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#v0-3-2-2020-12-16">v0.3.2 (2020-12-16)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#v0-3-1-2020-10-27">v0.3.1 (2020-10-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#v0-3-2020-10-27">v0.3 (2020-10-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#release-0-2-22-2015-05-15">release/0.2.22 (2015-05-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#release-0-2-21-2015-05-14">release/0.2.21 (2015-05-14)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#release-0-2-20-2011-11-15">release/0.2.20 (2011-11-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#release-0-2-16-2011-11-08">release/0.2.16 (2011-11-08)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id7">Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#id8">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="README.html" class="btn btn-neutral float-right" title="pyre2: Python RE2 wrapper for linear-time regular expressions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Andreas van Cranenburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

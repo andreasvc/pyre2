@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>re2 module &mdash; pyre2 0.3.11.dev5+ge83fc4d04 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f263d1f0"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Changelog" href="../CHANGELOG.html" />
+    <link rel="prev" title="src" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pyre2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../README.html">pyre2: Python RE2 wrapper for linear-time regular expressions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">re2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#re2.BackreferencesException"><code class="docutils literal notranslate"><span class="pre">BackreferencesException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.CharClassProblemException"><code class="docutils literal notranslate"><span class="pre">CharClassProblemException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.Match"><code class="docutils literal notranslate"><span class="pre">Match</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.end"><code class="docutils literal notranslate"><span class="pre">Match.end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.endpos"><code class="docutils literal notranslate"><span class="pre">Match.endpos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.expand"><code class="docutils literal notranslate"><span class="pre">Match.expand()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.group"><code class="docutils literal notranslate"><span class="pre">Match.group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.groupdict"><code class="docutils literal notranslate"><span class="pre">Match.groupdict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.groups"><code class="docutils literal notranslate"><span class="pre">Match.groups()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.lastgroup"><code class="docutils literal notranslate"><span class="pre">Match.lastgroup</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.lastindex"><code class="docutils literal notranslate"><span class="pre">Match.lastindex</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.pos"><code class="docutils literal notranslate"><span class="pre">Match.pos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.re"><code class="docutils literal notranslate"><span class="pre">Match.re</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.regs"><code class="docutils literal notranslate"><span class="pre">Match.regs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.span"><code class="docutils literal notranslate"><span class="pre">Match.span()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.start"><code class="docutils literal notranslate"><span class="pre">Match.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Match.string"><code class="docutils literal notranslate"><span class="pre">Match.string</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.Pattern"><code class="docutils literal notranslate"><span class="pre">Pattern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.contains"><code class="docutils literal notranslate"><span class="pre">Pattern.contains()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.count"><code class="docutils literal notranslate"><span class="pre">Pattern.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.findall"><code class="docutils literal notranslate"><span class="pre">Pattern.findall()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.finditer"><code class="docutils literal notranslate"><span class="pre">Pattern.finditer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.flags"><code class="docutils literal notranslate"><span class="pre">Pattern.flags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.fullmatch"><code class="docutils literal notranslate"><span class="pre">Pattern.fullmatch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.groupindex"><code class="docutils literal notranslate"><span class="pre">Pattern.groupindex</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.groups"><code class="docutils literal notranslate"><span class="pre">Pattern.groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.match"><code class="docutils literal notranslate"><span class="pre">Pattern.match()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.pattern"><code class="docutils literal notranslate"><span class="pre">Pattern.pattern</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.scanner"><code class="docutils literal notranslate"><span class="pre">Pattern.scanner()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.search"><code class="docutils literal notranslate"><span class="pre">Pattern.search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.split"><code class="docutils literal notranslate"><span class="pre">Pattern.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.sub"><code class="docutils literal notranslate"><span class="pre">Pattern.sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re2.Pattern.subn"><code class="docutils literal notranslate"><span class="pre">Pattern.subn()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.RegexError"><code class="docutils literal notranslate"><span class="pre">RegexError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.SREPattern"><code class="docutils literal notranslate"><span class="pre">SREPattern</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.count"><code class="docutils literal notranslate"><span class="pre">count()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.error"><code class="docutils literal notranslate"><span class="pre">error</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.escape"><code class="docutils literal notranslate"><span class="pre">escape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.findall"><code class="docutils literal notranslate"><span class="pre">findall()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.finditer"><code class="docutils literal notranslate"><span class="pre">finditer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.fullmatch"><code class="docutils literal notranslate"><span class="pre">fullmatch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.match"><code class="docutils literal notranslate"><span class="pre">match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.purge"><code class="docutils literal notranslate"><span class="pre">purge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.search"><code class="docutils literal notranslate"><span class="pre">search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.set_fallback_notification"><code class="docutils literal notranslate"><span class="pre">set_fallback_notification()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.split"><code class="docutils literal notranslate"><span class="pre">split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.sub"><code class="docutils literal notranslate"><span class="pre">sub()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re2.subn"><code class="docutils literal notranslate"><span class="pre">subn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyre2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+      <li class="breadcrumb-item active">re2 module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/re2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-re2">
+<span id="re2-module"></span><h1>re2 module<a class="headerlink" href="#module-re2" title="Link to this heading"></a></h1>
+<p>Regular expressions using Google’s RE2 engine.</p>
+<p>Compared to Python’s <code class="docutils literal notranslate"><span class="pre">re</span></code>, the RE2 engine compiles regular expressions to
+deterministic finite automata, which guarantees linear-time behavior.</p>
+<p>Intended as a drop-in replacement for <code class="docutils literal notranslate"><span class="pre">re</span></code>. Unicode is supported by encoding
+to UTF-8, and bytes strings are treated as UTF-8 when the UNICODE flag is given.
+For best performance, work with UTF-8 encoded bytes strings.</p>
+<p>Regular expressions that are not compatible with RE2 are processed with a
+fallback module (default is <code class="docutils literal notranslate"><span class="pre">re</span></code>). Examples of features not supported by RE2:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>lookahead assertions <code class="docutils literal notranslate"><span class="pre">(?!...)</span></code></p></li>
+<li><p>backreferences (<code class="docutils literal notranslate"><span class="pre">\\n</span></code> in search pattern)</p></li>
+<li><p>W and S not supported inside character classes</p></li>
+</ul>
+</div></blockquote>
+<p>On the other hand, unicode character classes are supported (e.g., <code class="docutils literal notranslate"><span class="pre">\p{Greek}</span></code>).
+Syntax reference: <a class="reference external" href="https://github.com/google/re2/wiki/Syntax">https://github.com/google/re2/wiki/Syntax</a></p>
+<p>What follows is a reference for the regular expression syntax supported by this
+module (i.e., without requiring fallback to <cite>re</cite> or compatible module).</p>
+<p>Regular expressions can contain both special and ordinary characters.
+Most ordinary characters, like “A”, “a”, or “0”, are the simplest
+regular expressions; they simply match themselves.</p>
+<p>The special characters are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&quot;.&quot;      Matches any character except a newline.
+&quot;^&quot;      Matches the start of the string.
+&quot;$&quot;      Matches the end of the string or just before the newline at
+         the end of the string.
+&quot;*&quot;      Matches 0 or more (greedy) repetitions of the preceding RE.
+         Greedy means that it will match as many repetitions as possible.
+&quot;+&quot;      Matches 1 or more (greedy) repetitions of the preceding RE.
+&quot;?&quot;      Matches 0 or 1 (greedy) of the preceding RE.
+*?,+?,?? Non-greedy versions of the previous three special characters.
+{m,n}    Matches from m to n repetitions of the preceding RE.
+{m,n}?   Non-greedy version of the above.
+&quot;\\&quot;     Either escapes special characters or signals a special sequence.
+[]       Indicates a set of characters.
+         A &quot;^&quot; as the first character indicates a complementing set.
+&quot;|&quot;      A|B, creates an RE that will match either A or B.
+(...)    Matches the RE inside the parentheses.
+         The contents can be retrieved or matched later in the string.
+(?:...)  Non-grouping version of regular parentheses.
+(?imsux) Set the I, M, S, U, or X flag for the RE (see below).
+</pre></div>
+</div>
+<p>The special sequences consist of “\” and a character from the list
+below.  If the ordinary character is not on the list, then the
+resulting RE will match the second character:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\A         Matches only at the start of the string.
+\Z         Matches only at the end of the string.
+\b         Matches the empty string, but only at the start or end of a word.
+\B         Matches the empty string, but not at the start or end of a word.
+\d         Matches any decimal digit.
+\D         Matches any non-digit character.
+\s         Matches any whitespace character.
+\S         Matches any non-whitespace character.
+\w         Matches any alphanumeric character.
+\W         Matches the complement of \w.
+\\         Matches a literal backslash.
+\pN        Unicode character class (one-letter name)
+\p{Greek}  Unicode character class
+\PN        negated Unicode character class (one-letter name)
+\P{Greek}  negated Unicode character class
+</pre></div>
+</div>
+<p>This module exports the following functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">count</span>     <span class="n">Count</span> <span class="nb">all</span> <span class="n">occurrences</span> <span class="n">of</span> <span class="n">a</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span><span class="o">.</span>
+<span class="k">match</span>     <span class="n">Match</span> <span class="n">a</span> <span class="n">regular</span> <span class="n">expression</span> <span class="n">pattern</span> <span class="n">to</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">a</span> <span class="n">string</span><span class="o">.</span>
+<span class="n">fullmatch</span> <span class="n">Match</span> <span class="n">a</span> <span class="n">regular</span> <span class="n">expression</span> <span class="n">pattern</span> <span class="n">to</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">a</span> <span class="n">string</span><span class="o">.</span>
+<span class="n">search</span>    <span class="n">Search</span> <span class="n">a</span> <span class="n">string</span> <span class="k">for</span> <span class="n">a</span> <span class="n">pattern</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">Match</span> <span class="nb">object</span><span class="o">.</span>
+<span class="n">contains</span>  <span class="n">Same</span> <span class="k">as</span> <span class="n">search</span><span class="p">,</span> <span class="n">but</span> <span class="n">only</span> <span class="k">return</span> <span class="nb">bool</span><span class="o">.</span>
+<span class="n">sub</span>       <span class="n">Substitute</span> <span class="n">occurrences</span> <span class="n">of</span> <span class="n">a</span> <span class="n">pattern</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span><span class="o">.</span>
+<span class="n">subn</span>      <span class="n">Same</span> <span class="k">as</span> <span class="n">sub</span><span class="p">,</span> <span class="n">but</span> <span class="n">also</span> <span class="k">return</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">substitutions</span> <span class="n">made</span><span class="o">.</span>
+<span class="n">split</span>     <span class="n">Split</span> <span class="n">a</span> <span class="n">string</span> <span class="n">by</span> <span class="n">the</span> <span class="n">occurrences</span> <span class="n">of</span> <span class="n">a</span> <span class="n">pattern</span><span class="o">.</span>
+<span class="n">findall</span>   <span class="n">Find</span> <span class="nb">all</span> <span class="n">occurrences</span> <span class="n">of</span> <span class="n">a</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span><span class="o">.</span>
+<span class="n">finditer</span>  <span class="n">Return</span> <span class="n">an</span> <span class="n">iterator</span> <span class="n">yielding</span> <span class="n">a</span> <span class="n">match</span> <span class="nb">object</span> <span class="k">for</span> <span class="n">each</span> <span class="n">match</span><span class="o">.</span>
+<span class="nb">compile</span>   <span class="n">Compile</span> <span class="n">a</span> <span class="n">pattern</span> <span class="n">into</span> <span class="n">a</span> <span class="n">RegexObject</span><span class="o">.</span>
+<span class="n">purge</span>     <span class="n">Clear</span> <span class="n">the</span> <span class="n">regular</span> <span class="n">expression</span> <span class="n">cache</span><span class="o">.</span>
+<span class="n">escape</span>    <span class="n">Backslash</span> <span class="nb">all</span> <span class="n">non</span><span class="o">-</span><span class="n">alphanumerics</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">string</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Some of the functions in this module takes flags as optional parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span>  <span class="n">ASCII</span>       <span class="n">Make</span> \<span class="n">w</span><span class="p">,</span> \<span class="n">W</span><span class="p">,</span> \<span class="n">b</span><span class="p">,</span> \<span class="n">B</span><span class="p">,</span> \<span class="n">d</span><span class="p">,</span> \<span class="n">D</span> <span class="n">match</span> <span class="n">the</span> <span class="n">corresponding</span> <span class="n">ASCII</span>
+               <span class="n">character</span> <span class="n">categories</span> <span class="p">(</span><span class="n">rather</span> <span class="n">than</span> <span class="n">the</span> <span class="n">whole</span> <span class="n">Unicode</span>
+               <span class="n">categories</span><span class="p">,</span> <span class="n">which</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">default</span><span class="p">)</span><span class="o">.</span>
+<span class="n">I</span>  <span class="n">IGNORECASE</span>  <span class="n">Perform</span> <span class="n">case</span><span class="o">-</span><span class="n">insensitive</span> <span class="n">matching</span><span class="o">.</span>
+<span class="n">M</span>  <span class="n">MULTILINE</span>   <span class="s2">&quot;^&quot;</span> <span class="n">matches</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">lines</span> <span class="p">(</span><span class="n">after</span> <span class="n">a</span> <span class="n">newline</span><span class="p">)</span>
+               <span class="k">as</span> <span class="n">well</span> <span class="k">as</span> <span class="n">the</span> <span class="n">string</span><span class="o">.</span>
+               <span class="s2">&quot;$&quot;</span> <span class="n">matches</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">lines</span> <span class="p">(</span><span class="n">before</span> <span class="n">a</span> <span class="n">newline</span><span class="p">)</span> <span class="k">as</span> <span class="n">well</span>
+               <span class="k">as</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">the</span> <span class="n">string</span><span class="o">.</span>
+<span class="n">S</span>  <span class="n">DOTALL</span>      <span class="s2">&quot;.&quot;</span> <span class="n">matches</span> <span class="nb">any</span> <span class="n">character</span> <span class="n">at</span> <span class="nb">all</span><span class="p">,</span> <span class="n">including</span> <span class="n">the</span> <span class="n">newline</span><span class="o">.</span>
+<span class="n">X</span>  <span class="n">VERBOSE</span>     <span class="n">Ignore</span> <span class="n">whitespace</span> <span class="ow">and</span> <span class="n">comments</span> <span class="k">for</span> <span class="n">nicer</span> <span class="n">looking</span> <span class="n">RE</span><span class="s1">&#39;s.</span>
+<span class="n">U</span>  <span class="n">UNICODE</span>     <span class="n">Enable</span> <span class="n">Unicode</span> <span class="n">character</span> <span class="n">classes</span> <span class="ow">and</span> <span class="n">make</span> \<span class="n">w</span><span class="p">,</span> \<span class="n">W</span><span class="p">,</span> \<span class="n">b</span><span class="p">,</span> \<span class="n">B</span><span class="p">,</span>
+               <span class="n">Unicode</span><span class="o">-</span><span class="n">aware</span> <span class="p">(</span><span class="n">default</span> <span class="k">for</span> <span class="n">unicode</span> <span class="n">patterns</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>This module also defines an exception ‘RegexError’ (also available under the
+alias ‘error’).</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="re2.BackreferencesException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">BackreferencesException</span></span><a class="headerlink" href="#re2.BackreferencesException" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Search pattern contains backreferences.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="re2.CharClassProblemException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">CharClassProblemException</span></span><a class="headerlink" href="#re2.CharClassProblemException" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Search pattern contains unsupported character class.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="re2.Match">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">Match</span></span><a class="headerlink" href="#re2.Match" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Match.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Match.end" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Match.endpos">
+<span class="sig-name descname"><span class="pre">endpos</span></span><a class="headerlink" href="#re2.Match.endpos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Match.expand">
+<span class="sig-name descname"><span class="pre">expand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Match.expand" title="Link to this definition"></a></dt>
+<dd><p>Expand a template with groups.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Match.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Match.group" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Match.groupdict">
+<span class="sig-name descname"><span class="pre">groupdict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#re2.Match.groupdict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Match.groups">
+<span class="sig-name descname"><span class="pre">groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Match.groups" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Match.lastgroup">
+<span class="sig-name descname"><span class="pre">lastgroup</span></span><a class="headerlink" href="#re2.Match.lastgroup" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Match.lastindex">
+<span class="sig-name descname"><span class="pre">lastindex</span></span><a class="headerlink" href="#re2.Match.lastindex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Match.pos">
+<span class="sig-name descname"><span class="pre">pos</span></span><a class="headerlink" href="#re2.Match.pos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Match.re">
+<span class="sig-name descname"><span class="pre">re</span></span><a class="headerlink" href="#re2.Match.re" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Match.regs">
+<span class="sig-name descname"><span class="pre">regs</span></span><a class="headerlink" href="#re2.Match.regs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Match.span">
+<span class="sig-name descname"><span class="pre">span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Match.span" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Match.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Match.start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Match.string">
+<span class="sig-name descname"><span class="pre">string</span></span><a class="headerlink" href="#re2.Match.string" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="re2.Pattern">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">Pattern</span></span><a class="headerlink" href="#re2.Pattern" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.contains" title="Link to this definition"></a></dt>
+<dd><p>“contains(string[, pos[, endpos]]) –&gt; bool.”</p>
+<p>Scan through string looking for a match, and return True or False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.count" title="Link to this definition"></a></dt>
+<dd><p>Return number of non-overlapping matches of pattern in string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.findall">
+<span class="sig-name descname"><span class="pre">findall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.findall" title="Link to this definition"></a></dt>
+<dd><p>Return all non-overlapping matches of pattern in string as a list
+of strings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.finditer">
+<span class="sig-name descname"><span class="pre">finditer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.finditer" title="Link to this definition"></a></dt>
+<dd><p>Yield all non-overlapping matches of pattern in string as Match
+objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Pattern.flags">
+<span class="sig-name descname"><span class="pre">flags</span></span><a class="headerlink" href="#re2.Pattern.flags" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.fullmatch">
+<span class="sig-name descname"><span class="pre">fullmatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.fullmatch" title="Link to this definition"></a></dt>
+<dd><p>“fullmatch(string[, pos[, endpos]]) –&gt; Match object or None.”</p>
+<p>Matches the entire string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Pattern.groupindex">
+<span class="sig-name descname"><span class="pre">groupindex</span></span><a class="headerlink" href="#re2.Pattern.groupindex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Pattern.groups">
+<span class="sig-name descname"><span class="pre">groups</span></span><a class="headerlink" href="#re2.Pattern.groups" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.match">
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.match" title="Link to this definition"></a></dt>
+<dd><p>Matches zero or more characters at the beginning of the string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.Pattern.pattern">
+<span class="sig-name descname"><span class="pre">pattern</span></span><a class="headerlink" href="#re2.Pattern.pattern" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.scanner">
+<span class="sig-name descname"><span class="pre">scanner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.scanner" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.search">
+<span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.search" title="Link to this definition"></a></dt>
+<dd><p>Scan through string looking for a match, and return a corresponding
+Match instance. Return None if no position in the string matches.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.split" title="Link to this definition"></a></dt>
+<dd><p>split(string[, maxsplit = 0]) –&gt; list</p>
+<p>Split a string by the occurrences of the pattern.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.sub">
+<span class="sig-name descname"><span class="pre">sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.sub" title="Link to this definition"></a></dt>
+<dd><p>sub(repl, string[, count = 0]) –&gt; newstring</p>
+<p>Return the string obtained by replacing the leftmost non-overlapping
+occurrences of pattern in string by the replacement repl.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="re2.Pattern.subn">
+<span class="sig-name descname"><span class="pre">subn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">repl,</span> <span class="pre">string[,</span> <span class="pre">count</span> <span class="pre">=</span> <span class="pre">0])</span> <span class="pre">--&gt;</span> <span class="pre">(newstring,</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">subs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.Pattern.subn" title="Link to this definition"></a></dt>
+<dd><p>Return the tuple (new_string, number_of_subs_made) found by replacing
+the leftmost non-overlapping occurrences of pattern with the
+replacement repl.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.RegexError">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">RegexError</span></span><a class="headerlink" href="#re2.RegexError" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#re2.error" title="re.error"><code class="xref py py-class docutils literal notranslate"><span class="pre">error</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="re2.SREPattern">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">SREPattern</span></span><a class="headerlink" href="#re2.SREPattern" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Pattern</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.compile">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_mem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8388608</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.compile" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.count">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.count" title="Link to this definition"></a></dt>
+<dd><p>Return number of non-overlapping matches in the string.</p>
+<p>Empty matches are included in the count.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="re2.error">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.error" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception raised for invalid regular expressions.</p>
+<p>Attributes:</p>
+<blockquote>
+<div><p>msg: The unformatted error message
+pattern: The regular expression pattern
+pos: The index in the pattern where compilation failed (may be None)
+lineno: The line corresponding to pos (may be None)
+colno: The column corresponding to pos (may be None)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.escape">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">escape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.escape" title="Link to this definition"></a></dt>
+<dd><p>Escape all non-alphanumeric characters in pattern.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.findall">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">findall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.findall" title="Link to this definition"></a></dt>
+<dd><p>Return a list of all non-overlapping matches in the string.</p>
+<p>Each match is represented as a string or a tuple (when there are two ore
+more groups). Empty matches are included in the result.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.finditer">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">finditer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.finditer" title="Link to this definition"></a></dt>
+<dd><p>Yield all non-overlapping matches in the string.</p>
+<p>For each match, the iterator returns a <code class="docutils literal notranslate"><span class="pre">Match</span></code> object.
+Empty matches are included in the result.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.fullmatch">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">fullmatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.fullmatch" title="Link to this definition"></a></dt>
+<dd><p>Try to apply the pattern to the entire string, returning
+a <code class="docutils literal notranslate"><span class="pre">Match</span></code> object, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no match was found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.match">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.match" title="Link to this definition"></a></dt>
+<dd><p>Try to apply the pattern at the start of the string, returning
+a <code class="docutils literal notranslate"><span class="pre">Match</span></code> object, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no match was found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.purge">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">purge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#re2.purge" title="Link to this definition"></a></dt>
+<dd><p>Clear the regular expression caches.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.search">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.search" title="Link to this definition"></a></dt>
+<dd><p>Scan through string looking for a match to the pattern, returning
+a <code class="docutils literal notranslate"><span class="pre">Match</span></code> object or none if no match was found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.set_fallback_notification">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">set_fallback_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.set_fallback_notification" title="Link to this definition"></a></dt>
+<dd><p>Set the fallback notification to a level; one of:
+FALLBACK_QUIETLY
+FALLBACK_WARNING
+FALLBACK_EXCEPTION</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.split">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.split" title="Link to this definition"></a></dt>
+<dd><p>Split the source string by the occurrences of the pattern,
+returning a list containing the resulting substrings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.sub">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.sub" title="Link to this definition"></a></dt>
+<dd><p>Return the string obtained by replacing the leftmost
+non-overlapping occurrences of the pattern in string by the
+replacement <code class="docutils literal notranslate"><span class="pre">repl</span></code>. <code class="docutils literal notranslate"><span class="pre">repl</span></code> can be either a string or a callable;
+if a string, backslash escapes in it are processed. If it is
+a callable, it’s passed the <code class="docutils literal notranslate"><span class="pre">Match</span></code> object and must return
+a replacement string to be used.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="re2.subn">
+<span class="sig-prename descclassname"><span class="pre">re2.</span></span><span class="sig-name descname"><span class="pre">subn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#re2.subn" title="Link to this definition"></a></dt>
+<dd><p>Return a 2-tuple containing <code class="docutils literal notranslate"><span class="pre">(new_string,</span> <span class="pre">number)</span></code>.
+new_string is the string obtained by replacing the leftmost
+non-overlapping occurrences of the pattern in the source
+string by the replacement <code class="docutils literal notranslate"><span class="pre">repl</span></code>. <code class="docutils literal notranslate"><span class="pre">number</span></code> is the number of
+substitutions that were made. <code class="docutils literal notranslate"><span class="pre">repl</span></code> can be either a string or a
+callable; if a string, backslash escapes in it are processed.
+If it is a callable, it’s passed the <code class="docutils literal notranslate"><span class="pre">Match</span></code> object and must
+return a replacement string to be used.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="src" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../CHANGELOG.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Andreas van Cranenburgh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+re2 module
+==========
+
+.. automodule:: re2
+   :members:
+   :undoc-members:
+   :show-inheritance:
