@@ -15,11 +15,11 @@ Using sub with a string and count parameter:
 
 	>>> regex = re2.compile(",")
 	>>> regex.sub(repl=".", string="_first,_second,\x00third", count=2)
-	b'_first._second.\x00third'
+	'_first._second.\x00third'
 
 Using sub with a function as repl:
 
 	>>> regex = re2.compile(",")
 	>>> def f(m): return '.'
 	>>> regex.sub(repl=f, string="_first,_second,\x00third")
-	b'_first._second.\x00third'
+	'_first._second.\x00third'
