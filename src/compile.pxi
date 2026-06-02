@@ -1,13 +1,15 @@
 
 def compile(pattern, int flags=0, int max_mem=8388608):
     cachekey = (type(pattern), pattern, flags, current_notification)
-    if cachekey in _cache:
-        return _cache[cachekey]
-    p = _compile(pattern, flags, max_mem)
+    try:
+        p = _cache[cachekey]
+        _cache.move_to_end(cachekey)
+    except KeyError:
+        p = _compile(pattern, flags, max_mem)
 
-    if len(_cache) >= _MAXCACHE:
-        _cache.popitem()
-    _cache[cachekey] = p
+        if len(_cache) >= _MAXCACHE:
+            _cache.popitem(last=False)
+        _cache[cachekey] = p
     return p
 
 

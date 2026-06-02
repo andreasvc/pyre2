@@ -813,3 +813,43 @@ def test_re_suite():
                 result = obj.search(s)
                 if result is None:
                     print('=== Fails on unicode-sensitive match', t)
+
+
+class LRUCacheTests(unittest.TestCase):
+    """Tests for the LRU eviction semantics of the pattern cache."""
+
+    def setUp(self):
+        re.purge()
+
+    def tearDown(self):
+        re.purge()
+
+    def test_cache_hit_returns_same_object(self):
+        """Compiling the same pattern twice returns the cached instance."""
+        p1 = re.compile(r'\d+')
+        p2 = re.compile(r'\d+')
+        self.assertIs(p1, p2)
+
+    def test_lru_eviction_keeps_recently_used(self):
+        """A pattern used after other patterns are inserted survives eviction."""
+        import re2 as _re2
+
+        original_max = _re2._MAXCACHE
+        try:
+            _re2._MAXCACHE = 3
+
+            re.compile(r'a')  # slot 1
+            re.compile(r'b')  # slot 2
+            re.compile(r'c')  # slot 3 — cache full
+
+            # Access 'a' to make it MRU; 'b' is now LRU.
+            re.compile(r'a')
+
+            # Insert a new pattern — 'b' (LRU) must be evicted, not 'a'.
+            re.compile(r'd')
+
+            # 'a' must still be cached (was MRU); 'b' must have been evicted.
+            self.assertIn((str, r'a', 0, _re2.FALLBACK_QUIETLY), _re2._cache)
+            self.assertNotIn((str, r'b', 0, _re2.FALLBACK_QUIETLY), _re2._cache)
+        finally:
+            _re2._MAXCACHE = original_max

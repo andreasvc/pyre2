@@ -110,6 +110,7 @@ import sys
 import types
 import warnings
 from re import error as RegexError
+from collections import OrderedDict
 
 error = re.error
 
@@ -157,8 +158,8 @@ cdef int current_notification = FALLBACK_QUIETLY
 # Type of compiled re object from Python stdlib
 SREPattern = type(re.compile(''))
 
-_cache = {}
-_cache_repl = {}
+_cache = OrderedDict()
+_cache_repl = OrderedDict()
 
 _MAXCACHE = 100
 
