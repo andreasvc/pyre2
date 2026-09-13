@@ -71,6 +71,8 @@ This module exports the following functions::
 
     count     Count all occurrences of a pattern in a string.
     match     Match a regular expression pattern to the beginning of a string.
+    prefixmatch
+              Explicit alias for match.
     fullmatch Match a regular expression pattern to all of a string.
     search    Search a string for a pattern and return Match object.
     contains  Same as search, but only return bool.
@@ -98,8 +100,8 @@ Some of the functions in this module takes flags as optional parameters::
     U  UNICODE     Enable Unicode character classes and make \w, \W, \b, \B,
                    Unicode-aware (default for unicode patterns).
 
-This module also defines an exception 'RegexError' (also available under the
-alias 'error').
+This module also defines an exception 'PatternError' (also available under the
+aliases 'RegexError' and 'error').
 
 """
 
@@ -113,6 +115,7 @@ from re import error as RegexError
 from collections import OrderedDict
 
 error = re.error
+PatternError = getattr(re, 'PatternError', re.error)
 
 # Import re flags to be compatible.
 I, M, S, U, X, L = re.I, re.M, re.S, re.U, re.X, re.L
@@ -185,6 +188,12 @@ def match(pattern, string, int flags=0):
     """Try to apply the pattern at the start of the string, returning
     a ``Match`` object, or ``None`` if no match was found."""
     return compile(pattern, flags).match(string)
+
+
+def prefixmatch(pattern, string, int flags=0):
+    """Try to apply the pattern at the start of the string, returning
+    a ``Match`` object, or ``None`` if no match was found."""
+    return compile(pattern, flags).prefixmatch(string)
 
 
 def fullmatch(pattern, string, int flags=0):
@@ -477,7 +486,7 @@ cdef void unicodeindices(map[int, int] &positions,
 __all__ = [
         # exceptions
         'BackreferencesException', 'CharClassProblemException',
-        'RegexError', 'error',
+        'PatternError', 'RegexError', 'error',
         # constants
         'FALLBACK_EXCEPTION', 'FALLBACK_QUIETLY', 'FALLBACK_WARNING', 'DEBUG',
         'S', 'DOTALL', 'I', 'IGNORECASE', 'L', 'LOCALE', 'M', 'MULTILINE',
@@ -487,6 +496,6 @@ __all__ = [
         'Match', 'Pattern', 'SREPattern',
         # functions
         'compile', 'count', 'escape', 'findall', 'finditer', 'fullmatch',
-        'match', 'purge', 'search', 'split', 'sub', 'subn',
+        'match', 'prefixmatch', 'purge', 'search', 'split', 'sub', 'subn',
         'set_fallback_notification',
         ]

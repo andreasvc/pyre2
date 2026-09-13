@@ -47,6 +47,23 @@ class ReTests(unittest.TestCase):
         self.assertEqual(re.match('x*', 'xxxa').span(), (0, 3))
         self.assertEqual(re.match('a+', 'xxx'), None)
 
+    def test_prefixmatch(self):
+        self.assertEqual(re.prefixmatch('a+', 'aaab').span(), (0, 3))
+        self.assertIsNone(re.prefixmatch('a+', 'baaa'))
+
+        pattern = re.compile('a+')
+        self.assertEqual(pattern.prefixmatch('baaa', 1).span(), (1, 4))
+
+        # Unsupported syntax uses FallbackPattern, which exposes the alias too.
+        fallback_pattern = re.compile(r'a(?=b)')
+        self.assertEqual(fallback_pattern.prefixmatch('ab').span(), (0, 1))
+
+    def test_pattern_error_alias(self):
+        self.assertIs(re.PatternError, re.error)
+        self.assertIs(re.PatternError, re.RegexError)
+        with self.assertRaises(re.PatternError):
+            re.compile('(')
+
     def bump_num(self, matchobj):
         int_value = int(matchobj.group(0))
         return str(int_value + 1)

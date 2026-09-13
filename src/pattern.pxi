@@ -17,6 +17,10 @@ cdef class Pattern:
         """Matches zero or more characters at the beginning of the string."""
         return self._search(string, pos, endpos, ANCHOR_START)
 
+    def prefixmatch(self, object string, int pos=0, int endpos=-1):
+        """Matches zero or more characters at the beginning of the string."""
+        return self._search(string, pos, endpos, ANCHOR_START)
+
     def fullmatch(self, object string, int pos=0, int endpos=-1):
         """"fullmatch(string[, pos[, endpos]]) --> Match object or None."
 
@@ -626,6 +630,11 @@ class FallbackPattern:
         return self._pattern.fullmatch(string, pos, endpos)
 
     def match(self, string, pos=0, endpos=9223372036854775807):
+        return self._pattern.match(string, pos, endpos)
+
+    def prefixmatch(self, string, pos=0, endpos=9223372036854775807):
+        # prefixmatch() is an alias for match(), including on Python versions
+        # before the standard library added the new name.
         return self._pattern.match(string, pos, endpos)
 
     def scanner(self, string, pos=0, endpos=9223372036854775807):
