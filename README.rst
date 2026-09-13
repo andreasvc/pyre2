@@ -98,7 +98,37 @@ For development, get the source::
 
     $ git clone git://github.com/andreasvc/pyre2.git
     $ cd pyre2
+    $ make
+
+This builds a wheel in ``dist/`` using the active ``python3`` interpreter.
+Build dependencies from ``pyproject.toml`` are installed in an isolated build
+environment, so they do not need to be installed manually. The RE2 library and
+compiler toolchain are system dependencies and must still be installed as
+described above.
+
+To compile and install pyre2 into the active Python environment instead::
+
     $ make install
+
+Using a virtual environment is recommended. You can select a specific Python
+interpreter by overriding ``PYTHON``, for example::
+
+    $ PYTHON=python3.12 make
+
+The equivalent commands without ``make`` are::
+
+    $ python3 -m pip wheel --no-deps --wheel-dir dist .
+    $ python3 -m pip install .
+
+To install the test dependencies and run the test suite with the selected
+interpreter::
+
+    $ make test
+    $ PYTHON=python3.15 make test
+
+Use ``make clean`` to remove compiled extension and intermediate build files.
+Use ``make distclean`` to also remove distributions, tox environments, and
+pytest caches.
 
 
 Platform-agnostic building with conda
@@ -268,4 +298,3 @@ This code builds on the following projects (in chronological order):
 - Facebook's pyre2 github repository: http://github.com/facebook/pyre2/
 - Mike Axiak's Cython version of this: http://github.com/axiak/pyre2/ (seems not actively maintained)
 - This fork adds Python 3 support and other improvements.
-

@@ -1,7 +1,5 @@
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(Cython REQUIRED)
-
 set(cython_module re2)
 
 set(re2_include_dir "${PROJECT_SOURCE_DIR}/src")
@@ -12,7 +10,7 @@ file(GLOB cy_srcs *.pyx *.pxi *.h)
 
 # .pyx -> .cpp
 add_custom_command(OUTPUT ${cython_output}
-                   COMMAND ${Cython_EXECUTABLE}
+                   COMMAND ${Python_EXECUTABLE} -m cython
                            -a -3
                            --fast-fail
                            --cplus -I ${re2_include_dir}
@@ -22,6 +20,11 @@ add_custom_command(OUTPUT ${cython_output}
                    COMMENT "Cythonizing extension ${cython_src}")
 
 pybind11_add_module(${cython_module} MODULE ${cython_output})
+
+# Do not treat include paths from imported targets as system paths. In
+# particular, distro packages may advertise /usr/include explicitly; passing
+# it as -isystem changes GCC's search order and breaks #include_next.
+set_target_properties(${cython_module} PROPERTIES NO_SYSTEM_FROM_IMPORTED ON)
 
 target_compile_definitions(
     ${cython_module} PRIVATE VERSION_INFO=${SCM_VERSION_INFO}
@@ -42,7 +45,15 @@ else()
   pkg_check_modules(RE2 IMPORTED_TARGET re2)
 
   if(RE2_FOUND)
-    include_directories(${RE2_INCLUDE_DIRS})
+    # Older CMake versions may add compiler-default directories such as
+    # /usr/include to imported pkg-config targets. Passing those explicitly can
+    # break GCC's #include_next lookup in C++ standard-library headers.
+    get_target_property(RE2_IMPORTED_INCLUDE_DIRS PkgConfig::RE2 INTERFACE_INCLUDE_DIRECTORIES)
+    if(RE2_IMPORTED_INCLUDE_DIRS)
+      list(REMOVE_ITEM RE2_IMPORTED_INCLUDE_DIRS ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES})
+      set_target_properties(PkgConfig::RE2 PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${RE2_IMPORTED_INCLUDE_DIRS}")
+    endif()
     target_link_libraries(${cython_module} PRIVATE PkgConfig::RE2)
   else()
     # last resort for manylinux: just try it
