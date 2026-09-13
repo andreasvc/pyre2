@@ -172,6 +172,11 @@ never have; these will be handled through fallback to the original ``re`` module
 On the other hand, unicode character classes are supported (e.g., ``\p{Greek}``).
 Syntax reference: https://github.com/google/re2/wiki/Syntax
 
+The ``re.Scanner`` helper is outside the scope of pyre2. Code that needs it
+should import it directly from Python's standard-library ``re`` module::
+
+    from re import Scanner
+
 However, there are times when you may want to be notified of a failover. The
 function ``set_fallback_notification`` determines the behavior in these cases::
 
