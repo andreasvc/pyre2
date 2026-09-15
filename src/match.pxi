@@ -245,35 +245,40 @@ cdef class Match:
             return self.regs[self.re.groupindex[group]]
 
     cdef _make_spans(self, char * cstring, int size, int * cpos, int * upos):
-        cdef int start, end
+        cdef int start, end, i
         cdef StringPiece * piece
+        cdef vector[int] offsets
 
-        spans = []
+        # Avoid allocating generic span-conversion containers for the common
+        # case of a pattern without capturing groups.
+        if self.nmatches == 1:
+            piece = &self.matches[0]
+            start = piece.data() - cstring
+            end = start + piece.length()
+            if self.encoded == 2:
+                re2_unicode_index_pair(
+                        &start, &end, cstring, size, cpos, upos)
+            self.regs = ((start, end),)
+            return
+
+        offsets.resize(self.nmatches * 2)
         for i in range(self.nmatches):
             if self.matches[i].data() == NULL:
-                spans.append((-1, -1))
+                offsets[2 * i] = -1
+                offsets[2 * i + 1] = -1
             else:
                 piece = &self.matches[i]
-                if piece.data() == NULL:
-                    return (-1, -1)
                 start = piece.data() - cstring
                 end = start + piece.length()
-                spans.append((start, end))
+                offsets[2 * i] = start
+                offsets[2 * i + 1] = end
 
         if self.encoded == 2:
-            spans = self._convert_spans(spans, cstring, size, cpos, upos)
+            re2_unicode_indices(&offsets[0], <int>offsets.size(),
+                    cstring, size, cpos, upos)
 
-        self.regs = tuple(spans)
-
-    cdef list _convert_spans(self, spans,
-            char * cstring, int size, int * cpos, int * upos):
-        cdef map[int, int] positions
-        cdef int x, y
-        for x, y in spans:
-            positions[x] = x
-            positions[y] = y
-        unicodeindices(positions, cstring, size, cpos, upos)
-        return [(positions[x], positions[y]) for x, y in spans]
+        self.regs = tuple([(offsets[2 * i], offsets[2 * i + 1])
+                for i in range(self.nmatches)])
 
     def __dealloc__(self):
         delete_StringPiece_array(self.matches)

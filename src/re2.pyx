@@ -456,49 +456,6 @@ cdef utf8indices(char * cstring, int size, int *pos, int *endpos):
     endpos[0] = newendpos
 
 
-cdef void unicodeindices(map[int, int] &positions,
-        char * cstring, int size, int * cpos, int * upos):
-    """Convert UTF-8 byte indices to unicode indices."""
-    cdef unsigned char * s = <unsigned char *>cstring
-    cdef map[int, int].iterator it = positions.begin()
-
-    if dereference(it).first == -1:
-        dereference(it).second = -1
-        postincrement(it)
-        if it == positions.end():
-            return
-    if dereference(it).first == cpos[0]:
-        dereference(it).second = upos[0]
-        postincrement(it)
-        if it == positions.end():
-            return
-
-    while cpos[0] < size:
-        if s[cpos[0]] < 0x80:
-            cpos[0] += 1
-            upos[0] += 1
-        elif s[cpos[0]] < 0xe0:
-            cpos[0] += 2
-            upos[0] += 1
-        elif s[cpos[0]] < 0xf0:
-            cpos[0] += 3
-            upos[0] += 1
-        else:
-            cpos[0] += 4
-            upos[0] += 1
-            # wide unicode chars get 2 unichars when Python <3.3 is compiled
-            # with --enable-unicode=ucs2
-            emit_if_narrow_unicode()
-            upos[0] += 1
-            emit_endif()
-
-        if dereference(it).first == cpos[0]:
-            dereference(it).second = upos[0]
-            postincrement(it)
-            if it == positions.end():
-                break
-
-
 __all__ = [
         # exceptions
         'BackreferencesException', 'CharClassProblemException',

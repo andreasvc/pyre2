@@ -1,7 +1,7 @@
 cimport cpython.unicode
 from libcpp.map cimport map
 from libcpp.string cimport string as cpp_string
-from cython.operator cimport postincrement, dereference
+from libcpp.vector cimport vector
 from libc.string cimport memset
 from cpython.buffer cimport Py_buffer, PyBUF_SIMPLE, PyObject_CheckBuffer, \
         PyObject_GetBuffer, PyBuffer_Release
@@ -96,8 +96,10 @@ cdef extern from "re2/re2.h" namespace "re2":
             const StringPiece rewrite) nogil
 
 
-cdef extern from "_re2macros.h":
+cdef extern from "_re2helpers.h":
     StringPiece * new_StringPiece_array(int) nogil
+    void re2_unicode_indices(int *, int, const char *, int, int *, int *) except + nogil
+    void re2_unicode_index_pair(int *, int *, const char *, int, int *, int *) nogil
 
 
 cdef extern from *:
