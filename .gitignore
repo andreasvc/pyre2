@@ -11,6 +11,8 @@ tests/access.log
 *.pyc
 *.swp
 *.egg-info
+tests/ip_re_bench.py
+valgrind-python.supp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
