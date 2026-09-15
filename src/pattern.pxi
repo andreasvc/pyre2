@@ -31,8 +31,8 @@ cdef class Pattern:
             re2_Anchor anchoring):
         """Scan through string looking for a match, and return a corresponding
         Match instance. Return None if no position in the string matches."""
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef Py_buffer buf
         cdef int retval
         cdef int encoded = 0
@@ -86,10 +86,10 @@ cdef class Pattern:
         """"contains(string[, pos[, endpos]]) --> bool."
 
         Scan through string looking for a match, and return True or False."""
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef Py_buffer buf
-        cdef int retval
+        cdef int retval = 0
         cdef int encoded = 0
         cdef StringPiece * sp
 
@@ -123,8 +123,8 @@ cdef class Pattern:
 
     def count(self, object string, int pos=0, int endpos=-1):
         """Return number of non-overlapping matches of pattern in string."""
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef Py_buffer buf
         cdef int retval
         cdef int encoded = 0
@@ -173,8 +173,8 @@ cdef class Pattern:
     def findall(self, object string, int pos=0, int endpos=-1):
         """Return all non-overlapping matches of pattern in string as a list
         of strings."""
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef Py_buffer buf
         cdef int encoded = 0
         cdef int retval
@@ -244,8 +244,8 @@ cdef class Pattern:
         return result
 
     def _finditer(self, object string, int pos=0, int endpos=-1):
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef Py_buffer buf
         cdef int retval
         cdef StringPiece * sp = NULL
@@ -304,8 +304,8 @@ cdef class Pattern:
         """split(string[, maxsplit = 0]) --> list
 
         Split a string by the occurrences of the pattern."""
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef int retval
         cdef int pos = 0
         cdef int lookahead = 0
@@ -459,8 +459,8 @@ cdef class Pattern:
         # This function is probably the hardest to implement correctly.
         # This is my first attempt, but if anybody has a better solution,
         # please help out.
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef Py_buffer buf
         cdef int retval
         cdef int prevendpos = -1
@@ -525,8 +525,8 @@ cdef class Pattern:
     cdef _subn_expand(self, bytes repl, string, int count, int * num_repl):
         """Perform ``count`` substitutions with replacement string and
         Match.expand."""
-        cdef char * cstring
-        cdef Py_ssize_t size
+        cdef char * cstring = NULL
+        cdef Py_ssize_t size = 0
         cdef Py_buffer buf
         cdef int retval
         cdef int prevendpos = -1
