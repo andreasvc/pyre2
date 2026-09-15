@@ -2,6 +2,7 @@ cimport cpython.unicode
 from libcpp.map cimport map
 from libcpp.string cimport string as cpp_string
 from cython.operator cimport postincrement, dereference
+from libc.string cimport memset
 from cpython.buffer cimport Py_buffer, PyBUF_SIMPLE, PyObject_CheckBuffer, \
         PyObject_GetBuffer, PyBuffer_Release
 from cpython.version cimport PY_MAJOR_VERSION

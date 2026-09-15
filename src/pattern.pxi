@@ -43,8 +43,8 @@ cdef class Pattern:
         if 0 <= endpos <= pos:
             return None
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         try:
             if encoded == 2 and (pos or endpos != -1):
@@ -96,8 +96,8 @@ cdef class Pattern:
         if 0 <= endpos <= pos:
             return False
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         try:
             if encoded == 2 and (pos or endpos != -1):
@@ -132,8 +132,8 @@ cdef class Pattern:
         cdef StringPiece * sp = NULL
         cdef StringPiece * matches = NULL
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         try:
             if encoded == 2 and (pos or endpos != -1):
@@ -182,8 +182,8 @@ cdef class Pattern:
         cdef StringPiece * sp = NULL
         cdef StringPiece * matches = NULL
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         try:
             if encoded == 2 and (pos or endpos != -1):
@@ -253,8 +253,8 @@ cdef class Pattern:
         cdef int encoded = 0
         cdef int cpos = 0, upos = pos
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         try:
             if encoded == 2 and (pos or endpos != -1):
@@ -319,8 +319,8 @@ cdef class Pattern:
         if maxsplit < 0:
             maxsplit = 0
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         matches = new_StringPiece_array(self.groups + 1)
         sp = new StringPiece(cstring, size)
@@ -406,8 +406,11 @@ cdef class Pattern:
     cdef _subn(self, repl, string, int count, int *num_repl):
         cdef bytes repl_b
         cdef char * cstring
+        cdef char * input_cstring = NULL
         cdef object result
         cdef Py_ssize_t size
+        cdef Py_ssize_t input_size = 0
+        cdef Py_buffer input_buf
         cdef StringPiece * sp = NULL
         cdef cpp_string * input_str = NULL
         cdef int string_encoded = 0
@@ -428,15 +431,16 @@ cdef class Pattern:
             # but the number of differences with Python behavior is
             # non-trivial.
             return self._subn_expand(repl_b, string, count, num_repl)
+
+        if pystring_to_cstring(string, &input_cstring, &input_size, &input_buf,
+                &string_encoded, self.encoded) == -1:
+            raise TypeError('expected string or buffer')
         try:
             cstring = repl_b
             size = len(repl_b)
             sp = new StringPiece(cstring, size)
 
-            bytestr = unicode_to_bytes(string, &string_encoded, self.encoded)
-            if not string_encoded and not isinstance(bytestr, bytes):
-                bytestr = bytes(bytestr)  # coerce buffer to bytes object
-            input_str = new cpp_string(<char *>bytestr, len(bytestr))
+            input_str = new cpp_string(input_cstring, input_size)
             # NB: RE2 treats unmatched groups in repl as empty string;
             # Python raises an error.
             with nogil:
@@ -453,6 +457,7 @@ cdef class Pattern:
                 result = cpp_to_bytes(input_str[0])
         finally:
             del input_str, sp
+            release_cstring(&input_buf)
         return result
 
     cdef _subn_callback(self, callback, string, int count, int * num_repl):
@@ -471,8 +476,8 @@ cdef class Pattern:
         cdef bytearray result = bytearray()
         cdef int cpos = 0, upos = 0
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         try:
             sp = new StringPiece(cstring, size)
@@ -561,8 +566,8 @@ cdef class Pattern:
         if count < 0:
             count = 0
 
-        bytestr = unicode_to_bytes(string, &encoded, self.encoded)
-        if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
+        if pystring_to_cstring(string, &cstring, &size, &buf,
+                &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         sp = new StringPiece(cstring, size)
         try:

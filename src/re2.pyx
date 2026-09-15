@@ -383,13 +383,28 @@ cdef inline unicode_to_bytes(object pystring, int * encoded,
 
 cdef inline int pystring_to_cstring(
         object pystring, char ** cstring, Py_ssize_t * size,
-        Py_buffer * buf):
-    """Get a pointer from bytes/buffer object ``pystring``.
+        Py_buffer * buf, int * encoded, int checkotherencoding) except -1:
+    """Get a pointer from string/buffer object ``pystring``.
 
-    On success, return 0, and set ``cstring``, ``size``, and ``buf``."""
+    Unicode strings use CPython's cached UTF-8 representation. On success,
+    return 0, and set ``cstring``, ``size``, ``buf``, and ``encoded``."""
     cdef int result = -1
     cstring[0] = NULL
     size[0] = 0
+    memset(buf, 0, sizeof(Py_buffer))
+    buf.len = -1
+    if cpython.unicode.PyUnicode_Check(pystring):
+        if checkotherencoding == 0:
+            raise TypeError("can't use a bytes pattern on a string-like object")
+        cstring[0] = <char *>cpython.unicode.PyUnicode_AsUTF8AndSize(
+                pystring, size)
+        encoded[0] = (1 if cpython.unicode.PyUnicode_GET_LENGTH(pystring)
+                == size[0] else 2)
+        return 0
+
+    encoded[0] = 0
+    if checkotherencoding > 0:
+        raise TypeError("can't use a string pattern on a bytes-like object")
     if PyObject_CheckBuffer(pystring) == 1:  # new-style Buffer interface
         result = PyObject_GetBuffer(pystring, buf, PyBUF_SIMPLE)
         if result == 0:
@@ -400,7 +415,8 @@ cdef inline int pystring_to_cstring(
 
 cdef inline void release_cstring(Py_buffer *buf):
     """Release buffer if necessary."""
-    PyBuffer_Release(buf)
+    if buf.len >= 0:
+        PyBuffer_Release(buf)
 
 
 cdef utf8indices(char * cstring, int size, int *pos, int *endpos):
