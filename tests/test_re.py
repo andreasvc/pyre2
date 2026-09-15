@@ -223,6 +223,57 @@ class ReTests(unittest.TestCase):
         self.assertEqual(re.subn("b*", "x", "xyz"), ('xxxyxzx', 4))
         self.assertEqual(re.subn("b*", "x", "xyz", 2), ('xxxyz', 2))
 
+    def test_re_sub_callback_empty_matches(self):
+        matches = []
+
+        def record_match(match):
+            matches.append((match.group(), match.span()))
+            return '<R>'
+
+        self.assertEqual(re.subn('x*', record_match, 'abxd'),
+                         ('<R>a<R>b<R><R>d<R>', 5))
+        self.assertEqual(matches, [('', (0, 0)), ('', (1, 1)),
+                                   ('x', (2, 3)), ('', (3, 3)),
+                                   ('', (4, 4))])
+
+    def test_re_sub_callback_empty_matches_unicode(self):
+        matches = []
+
+        def record_match(match):
+            matches.append(match.span())
+            return '<R>'
+
+        self.assertEqual(re.subn('', record_match, 'éx'),
+                         ('<R>é<R>x<R>', 3))
+        self.assertEqual(matches, [(0, 0), (1, 1), (2, 2)])
+
+    def test_re_sub_callback_match_bounds(self):
+        bounds = []
+
+        def record_bounds(match):
+            bounds.append((match.pos, match.endpos))
+            return 'x'
+
+        self.assertEqual(re.sub('a', record_bounds, 'baac'), 'bxxc')
+        self.assertEqual(bounds, [(0, 4), (0, 4)])
+
+    def test_re_sub_callback_result_types(self):
+        self.assertEqual(re.sub('a', lambda match: None, 'a'), '')
+        self.assertEqual(re.sub(b'a', lambda match: bytearray(b'x'), b'a'), b'x')
+        self.assertEqual(re.sub(b'a', lambda match: memoryview(b'x'), b'a'), b'x')
+        with self.assertRaises(TypeError):
+            re.sub('a', lambda match: 0, 'a')
+        with self.assertRaises(TypeError):
+            re.sub('a', lambda match: b'x', 'a')
+        with self.assertRaises(TypeError):
+            re.sub(b'a', lambda match: 'x', b'a')
+
+    def test_re_sub_callback_negative_count(self):
+        calls = []
+        self.assertEqual(re.subn('a', lambda match: calls.append(match),
+                                 'aaa', -1), ('aaa', 0))
+        self.assertEqual(calls, [])
+
     def test_re_split(self):
         self.assertEqual(re.split(":", ":a:b::c"), ['', 'a', 'b', '', 'c'])
         self.assertEqual(re.split(":*", ":a:b::c"), ['', 'a', 'b', 'c'])

@@ -456,37 +456,33 @@ cdef class Pattern:
         return result
 
     cdef _subn_callback(self, callback, string, int count, int * num_repl):
-        # This function is probably the hardest to implement correctly.
-        # This is my first attempt, but if anybody has a better solution,
-        # please help out.
         cdef char * cstring = NULL
         cdef Py_ssize_t size = 0
         cdef Py_buffer buf
         cdef int retval
-        cdef int prevendpos = -1
-        cdef int endpos = 0
+        cdef int match_start = 0
+        cdef int match_end = 0
         cdef int pos = 0
+        cdef int searchpos = 0
         cdef int encoded = 0
-        cdef StringPiece * sp
+        cdef unsigned char lead
+        cdef StringPiece * sp = NULL
         cdef Match m
         cdef bytearray result = bytearray()
         cdef int cpos = 0, upos = 0
 
-        if count < 0:
-            count = 0
-
         bytestr = unicode_to_bytes(string, &encoded, self.encoded)
         if pystring_to_cstring(bytestr, &cstring, &size, &buf) == -1:
             raise TypeError('expected string or buffer')
-        sp = new StringPiece(cstring, size)
         try:
-            while True:
+            sp = new StringPiece(cstring, size)
+            while count >= 0:
                 m = Match(self, self.groups + 1)
                 m.string = string
                 with nogil:
                     retval = self.re_pattern.Match(
                             sp[0],
-                            pos,
+                            searchpos,
                             size,
                             UNANCHORED,
                             m.matches,
@@ -494,28 +490,53 @@ cdef class Pattern:
                 if retval == 0:
                     break
 
-                endpos = m.matches[0].data() - cstring
-                if endpos == prevendpos:
-                    endpos += 1
-                    if endpos > size:
-                        break
-                prevendpos = endpos
-                result.extend(sp.data()[pos:endpos])
-                pos = endpos + m.matches[0].length()
+                match_start = m.matches[0].data() - cstring
+                match_end = match_start + m.matches[0].length()
+                result.extend(sp.data()[pos:match_start])
+                pos = match_end
 
                 m.encoded = encoded
                 m.nmatches = self.groups + 1
+                m.pos = 0
+                m.endpos = len(string)
                 m._make_spans(cstring, size, &cpos, &upos)
                 m._init_groups()
                 tmp = callback(m)
-                if tmp:
-                    result.extend(tmp.encode('utf8') if encoded else tmp)
-                else:
-                    result.extend(b'')
+                if tmp is not None:
+                    if encoded:
+                        if not isinstance(tmp, unicode):
+                            raise TypeError('callback must return a string or None')
+                        result.extend(tmp.encode('utf8'))
+                    else:
+                        if not PyObject_CheckBuffer(tmp):
+                            raise TypeError(
+                                    'callback must return a bytes-like object or None')
+                        result.extend(bytes(tmp))
 
                 num_repl[0] += 1
                 if count and num_repl[0] >= count:
                     break
+
+                # An empty match must advance the next search by one character,
+                # while leaving ``pos`` at the end of the accepted match so the
+                # skipped character is copied to the result on the next match.
+                if match_start == match_end:
+                    if match_end >= size:
+                        break
+                    if encoded == 2:
+                        lead = (<unsigned char *>cstring)[match_end]
+                        if lead < 0x80:
+                            searchpos = match_end + 1
+                        elif lead < 0xe0:
+                            searchpos = match_end + 2
+                        elif lead < 0xf0:
+                            searchpos = match_end + 3
+                        else:
+                            searchpos = match_end + 4
+                    else:
+                        searchpos = match_end + 1
+                else:
+                    searchpos = match_end
             result.extend(sp.data()[pos:size])
         finally:
             del sp
