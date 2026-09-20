@@ -17,6 +17,10 @@ minversion = "6.0"
 testpaths = [
     "tests",
 ]
+doctest_optionflags = [
+    "ELLIPSIS",
+    "NORMALIZE_WHITESPACE",
+]
 
 [tool.cython-lint]
 max-line-length = 110

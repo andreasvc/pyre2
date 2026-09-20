@@ -6,10 +6,10 @@ These are simple tests of the ``search`` function
     >>> import warnings
     >>> warnings.filterwarnings('ignore', category=DeprecationWarning)
 
-    >>> re2.search("((?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])", "hello 28.224.2.1 test").group()
+    >>> re2.search(r"((?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])", "hello 28.224.2.1 test").group()
     '28.224.2.1'
 
-    >>> re2.search("(\d{3})\D?(\d{3})\D?(\d{4})", "800-555-1212").groups()
+    >>> re2.search(r"(\d{3})\D?(\d{3})\D?(\d{4})", "800-555-1212").groups()
     ('800', '555', '1212')
 
     >>> input = 'a' * 999
