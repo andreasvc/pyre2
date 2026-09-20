@@ -4,7 +4,7 @@ PYTHON_TAG := $(shell $(PYTHON) -c "import sys; print(sys.implementation.cache_t
 WHEEL_DIR := build/make/$(PYTHON_TAG)
 WHEEL_STAMP := $(WHEEL_DIR)/.built
 BUILD_SOURCES := \
-	pyproject.toml setup.py setup.cfg CMakeLists.txt \
+	pyproject.toml setup.py CMakeLists.txt \
 	$(wildcard src/*.pyx src/*.pxi src/*.h) \
 	src/CMakeLists.txt
 

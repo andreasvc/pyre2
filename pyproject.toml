@@ -1,7 +1,7 @@
 [build-system]
 requires = [
-    "setuptools>=42",
-    "setuptools_scm[toml]>=6.2",
+    "setuptools>=80",
+    "setuptools_scm>=8",
     "Cython>=0.20",
     "pybind11>=2.12",
     "ninja; sys_platform != 'Windows'",
@@ -10,7 +10,56 @@ requires = [
 
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "pyre2"
+description = "Python wrapper for Google RE2 library using Cython"
+readme = { file = "README.rst", content-type = "text/x-rst" }
+requires-python = ">=3.10"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+dynamic = ["version"]
+classifiers = [
+    "Programming Language :: Cython",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+authors = [
+    { name = "Andreas van Cranenburgh", email = "andreas@unstable.nl" },
+]
+maintainers = [
+    { name = "Steve Arnold", email = "nerdboy@gentoo.org" },
+]
+
+[project.urls]
+Homepage = "https://github.com/andreasvc/pyre2"
+
+[project.optional-dependencies]
+doc = [
+    "sphinx",
+    "sphinx_rtd_theme",
+    "sphinxcontrib-apidoc",
+]
+test = ["pytest"]
+perf = ["regex"]
+
+[tool.setuptools]
+packages = []
+
 [tool.setuptools_scm]
+
+[tool.check-manifest]
+ignore = [
+    ".gitattributes",
+    ".gitchangelog.rc",
+    ".gitignore",
+    "conda/**",
+]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
