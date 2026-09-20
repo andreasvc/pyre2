@@ -35,6 +35,7 @@ test: $(WHEEL_STAMP)
 
 lint:
 	cython-lint src/
+	ruff check
 
 clean:
 	rm -rf build pyre2.egg-info UNKNOWN.egg-info

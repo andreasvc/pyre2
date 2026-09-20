@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- mode: python -*-
-
 # Re test suite and benchmark suite v1.5
 
 # The 3 possible outcomes for each pattern

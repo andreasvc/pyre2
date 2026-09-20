@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 This module runs the performance tests to compare the ``re`` module with the
 ``re2`` module. You can just run it from the command line, assuming you have re2
@@ -8,16 +7,18 @@ To add a test, you can add a function to the bottom of this page that uses the
 @register_test() decorator. Alternatively, you can create a module that uses it and
 import it.
 """
-from timeit import Timer
-import re2
 import re
+from timeit import Timer
+
+import re2
+
 try:
     import regex
 except ImportError:
     regex = None
 
-import os
 import gzip
+import os
 
 re2.set_fallback_notification(re2.FALLBACK_EXCEPTION)
 
@@ -131,7 +132,8 @@ _wikidata = None
 def getwikidata():
     global _wikidata
     if _wikidata is None:
-        _wikidata = gzip.open('wikipages.xml.gz', 'rb').read()
+        with gzip.open('wikipages.xml.gz', 'rb') as inp:
+            _wikidata = inp.read()
     return _wikidata
 
 
@@ -155,7 +157,7 @@ def replace_wikilinks(pattern, data):
     """
     This test replaces links of the form [[Obama|Barack_Obama]] to Obama.
     """
-    return len(pattern.sub(r'\1'.encode('utf-8'), data))
+    return len(pattern.sub(br'\1', data))
 
 
 

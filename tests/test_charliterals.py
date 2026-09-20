@@ -1,9 +1,11 @@
-import re2 as re
 import warnings
+
+import re2 as re
 
 warnings.filterwarnings('ignore', category=DeprecationWarning)
 
 import unittest
+
 
 class TestCharLiterals(unittest.TestCase):
     def test_character_literals(self):
@@ -19,7 +21,7 @@ class TestCharLiterals(unittest.TestCase):
         assert (re.match(r"\x%02xz" % i, chr(i) + "z") is None) == False
 
         try:
-            re.match("\911", "")
+            re.match(r"\911", "")
         except Exception as exp:
             assert exp.msg == "invalid group reference 91 at position 1"
 
@@ -35,6 +37,6 @@ class TestCharLiterals(unittest.TestCase):
         assert (re.match(r"[\x%02xz]" % i, chr(i) + "z") is None) == False
 
         try:
-            re.match("[\911]", "")
+            re.match(r"[\911]", "")
         except Exception as exp:
-            assert exp.msg == "invalid escape sequence: \9"
+            assert exp.msg == r"invalid escape sequence: \9"

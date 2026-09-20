@@ -26,3 +26,6 @@ doctest_optionflags = [
 max-line-length = 110
 ignore = ['E128','E225','E226','E227','E402','E703','E741','E999']
 # exclude = 'my_project/excluded_cython_file.pyx'
+
+[tool.ruff]
+lint.ignore = ['UP031','BLE001']

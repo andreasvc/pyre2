@@ -1,22 +1,17 @@
-from __future__ import print_function
 
-import os
 import sys
 import traceback
+from re import Scanner
 from weakref import proxy
 
 import re2 as re
-from re import Scanner
 
 try:
-    from test import support
     from test.support import verbose
 except ImportError:  # import error on Windows
     verbose = re.VERBOSE
 
-if sys.version_info[0] > 2:
-    unicode = str
-    unichr = chr
+unicode = str
 
 # Misc tests from Tim Peters' re.doc
 
@@ -30,7 +25,6 @@ import unittest
 class ReTests(unittest.TestCase):
 
     def test_weakref(self):
-        s = 'QabbbcR'
         x = re.compile('ab+c')
         y = proxy(x)
         self.assertEqual(x.findall('QabbbcR'), y.findall('QabbbcR'))
@@ -119,20 +113,17 @@ class ReTests(unittest.TestCase):
         # re.sub(x, y, unicode(x)) should return unicode(y), and
         # re.sub(x, y, str(x)) should return
         #     str(y) if isinstance(y, str) else unicode(y).
-        for x in 'x', u'x':
-            for y in 'y', u'y':
-                z = re.sub(x, y, u'')
-                self.assertEqual(z, u'')
+        for x in 'x', 'x':
+            for y in 'y', 'y':
+                z = re.sub(x, y, '')
+                self.assertEqual(z, '')
                 self.assertEqual(type(z), unicode)
-                #
                 z = re.sub(x, y, '')
                 self.assertEqual(z, '')
                 self.assertEqual(type(z), str)
-                #
                 z = re.sub(x, y, unicode(x))
                 self.assertEqual(z, y)
                 self.assertEqual(type(z), unicode)
-                #
                 z = re.sub(x, y, str(x))
                 self.assertEqual(z, y)
                 self.assertEqual(type(z), type(y))
@@ -438,20 +429,20 @@ class ReTests(unittest.TestCase):
         self.assertEqual(re.search(r"^\Aabc\Z$", "abc", re.M).group(0), "abc")
         self.assertEqual(re.search(r"^\Aabc\Z$", "\nabc\n", re.M), None)
         self.assertEqual(re.search(r"\b(b.)\b",
-                                   u"abcd abc bcd bx").group(1), "bx")
+                                   "abcd abc bcd bx").group(1), "bx")
         self.assertEqual(re.search(r"\B(b.)\B",
-                                   u"abc bcd bc abxd").group(1), "bx")
-        self.assertEqual(re.search(r"^abc$", u"\nabc\n", re.M).group(0), "abc")
-        self.assertEqual(re.search(r"^\Aabc\Z$", u"abc", re.M).group(0), "abc")
-        self.assertEqual(re.search(r"^\Aabc\Z$", u"\nabc\n", re.M), None)
+                                   "abc bcd bc abxd").group(1), "bx")
+        self.assertEqual(re.search(r"^abc$", "\nabc\n", re.M).group(0), "abc")
+        self.assertEqual(re.search(r"^\Aabc\Z$", "abc", re.M).group(0), "abc")
+        self.assertEqual(re.search(r"^\Aabc\Z$", "\nabc\n", re.M), None)
         self.assertEqual(re.search(r"\d\D\w\W\s\S",
                                    "1aa! a").group(0), "1aa! a")
 
     def test_bigcharset(self):
-        self.assertEqual(re.match(u"([\u2222\u2223])",
-                                  u"\u2222").group(1), u"\u2222")
-        self.assertEqual(re.match(u"([\u2222\u2223])",
-                                  u"\u2222", re.UNICODE).group(1), u"\u2222")
+        self.assertEqual(re.match("([\u2222\u2223])",
+                                  "\u2222").group(1), "\u2222")
+        self.assertEqual(re.match("([\u2222\u2223])",
+                                  "\u2222", re.UNICODE).group(1), "\u2222")
 
     def test_anyall(self):
         self.assertEqual(re.match("a.b", "a\nb", re.DOTALL).group(0),
@@ -475,7 +466,7 @@ class ReTests(unittest.TestCase):
 
     def test_ignore_case(self):
         self.assertEqual(re.match("abc", "ABC", re.I).group(0), "ABC")
-        self.assertEqual(re.match("abc", u"ABC", re.I).group(0), "ABC")
+        self.assertEqual(re.match("abc", "ABC", re.I).group(0), "ABC")
         self.assertEqual(re.match(r"(a\s[^a])", "a b", re.I).group(1), "a b")
         self.assertEqual(re.match(r"(a\s[^a]*)", "a bb", re.I).group(1), "a bb")
         self.assertEqual(re.match(r"(a\s[abc])", "a b", re.I).group(1), "a b")
@@ -490,7 +481,7 @@ class ReTests(unittest.TestCase):
 
     def test_getlower(self):
         self.assertEqual(re.match("abc", "ABC", re.I).group(0), "ABC")
-        self.assertEqual(re.match("abc", u"ABC", re.I).group(0), "ABC")
+        self.assertEqual(re.match("abc", "ABC", re.I).group(0), "ABC")
 
     def test_not_literal(self):
         self.assertEqual(re.search(r"\s([^a])", " b").group(1), "b")
@@ -504,7 +495,7 @@ class ReTests(unittest.TestCase):
         p = ""
         # This had to change from the original test of range(0,256)
         # because we can't support non-ascii non-utf8 strings
-        for i in range(0, 128):
+        for i in range(128):
             p = p + chr(i)
             self.assertEqual(re.match(re.escape(chr(i)), chr(i)) is not None,
                              True)
@@ -593,7 +584,7 @@ class ReTests(unittest.TestCase):
         self.assertEqual(re.search('(a|b)*?c', 10000*'ab'+'cd').end(0), 20001)
 
     def test_bug_612074(self):
-        pat=u"["+re.escape(u"\u2039")+u"]"
+        pat="["+re.escape("\u2039")+"]"
         self.assertEqual(re.compile(pat) and 1, 1)
 
     def test_stack_overflow(self):
@@ -660,10 +651,6 @@ class ReTests(unittest.TestCase):
 
     def test_bug_764548(self):
         # bug 764548, re.compile() barfs on str/unicode subclasses
-        try:
-            unicode
-        except NameError:
-            return  # no problem if we have no unicode
         class my_unicode(unicode): pass
         pat = re.compile(my_unicode("abc"))
         self.assertEqual(pat.match("xyz"), None)
@@ -674,18 +661,10 @@ class ReTests(unittest.TestCase):
                          [":", "::", ":::"])
 
     def test_bug_926075(self):
-        try:
-            unicode
-        except NameError:
-            return # no problem if we have no unicode
         self.assertTrue(re.compile(b'bug_926075') is not
                      re.compile(eval("u'bug_926075'")))
 
     def test_bug_931848(self):
-        try:
-            unicode
-        except NameError:
-            pass
         pattern = eval('u"[\u002E\u3002\uFF0E\uFF61]"')
         self.assertEqual(re.compile(pattern).split("a.b.c"),
                          ['a','b','c'])
@@ -716,8 +695,8 @@ class ReTests(unittest.TestCase):
 
     def test_inline_flags(self):
         # Bug #1700
-        upper_char = unichr(0x1ea0) # Latin Capital Letter A with Dot Bellow
-        lower_char = unichr(0x1ea1) # Latin Small Letter A with Dot Bellow
+        upper_char = chr(0x1ea0) # Latin Capital Letter A with Dot Bellow
+        lower_char = chr(0x1ea1) # Latin Small Letter A with Dot Bellow
 
         p = re.compile(upper_char, re.I | re.U)
         q = p.match(lower_char)
@@ -762,9 +741,9 @@ class ReTests(unittest.TestCase):
 
 def test_re_suite():
     try:
-        from tests.re_utils import tests, SUCCEED, FAIL, SYNTAX_ERROR
+        from tests.re_utils import FAIL, SUCCEED, SYNTAX_ERROR, tests
     except ImportError:
-        from re_utils import tests, SUCCEED, FAIL, SYNTAX_ERROR
+        from re_utils import FAIL, SUCCEED, SYNTAX_ERROR, tests
 
     if verbose:
         print('\nRunning test_re_suite ...')
@@ -791,7 +770,7 @@ def test_re_suite():
                 print('=== Syntax error:', t)
         except KeyboardInterrupt:
             raise KeyboardInterrupt
-        except:
+        except Exception:
             print('*** Unexpected error ***', t)
             if verbose:
                 traceback.print_exc(file=sys.stdout)
@@ -810,7 +789,6 @@ def test_re_suite():
                 if result is not None:
                     # Matched, as expected, so now we compute the
                     # result string and compare it to our expected result.
-                    start, end = result.span(0)
                     vardict={'found': result.group(0),
                              'groups': result.group(),
                              'flags': result.re.flags}
@@ -823,7 +801,7 @@ def test_re_suite():
                         except IndexError:
                             gi = "Error"
                         vardict['g%d' % i] = gi
-                    for i in result.re.groupindex.keys():
+                    for i in result.re.groupindex:
                         try:
                             gi = result.group(i)
                             if gi is None:
