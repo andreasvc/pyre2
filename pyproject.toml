@@ -24,8 +24,21 @@ doctest_optionflags = [
 
 [tool.cython-lint]
 max-line-length = 110
-ignore = ['E128','E225','E226','E227','E402','E703','E741','E999']
-# exclude = 'my_project/excluded_cython_file.pyx'
+ignore = [
+    # Continuation lines have one extra level of indent which pycodestyle
+    # considers under-indented relative to the opening delimiter.
+    "E128",
+    # The public ``I`` flag intentionally mirrors the standard library's
+    # ``re.I`` compatibility alias.
+    "E741",
+]
 
-[tool.ruff]
-lint.ignore = ['UP031','BLE001']
+[tool.ruff.lint]
+ignore = [
+    # Preserve %-formatting in legacy tests, especially regex strings where
+    # automated conversion can change formatting or escaping semantics.
+    "UP031",
+    # Some legacy tests intentionally catch any parser or test-harness error
+    # so that they can inspect or report it.
+    "BLE001",
+]
