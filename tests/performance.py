@@ -141,9 +141,7 @@ def getwikidata():
                2,
                data=getwikidata())
 def findall_uriemail(pattern, data):
-    """
-    Find URIs and emails'
-    """
+    """Find URIs and emails"""
     return len(pattern.findall(data))
 
 
@@ -152,9 +150,7 @@ def findall_uriemail(pattern, data):
                r'\[\[([^]|]+)(?:\|[^]]*)?\]\]',
                data=getwikidata())
 def replace_wikilinks(pattern, data):
-    """
-    Replace links of the form [[Obama|Barack_Obama]] with Obama.
-    """
+    """Replace links of the form [[Obama|Barack_Obama]] with Obama"""
     return len(pattern.sub(br'\1', data))
 
 
@@ -163,9 +159,7 @@ def replace_wikilinks(pattern, data):
                r'\[\[[^]]*\]\]',
                data=getwikidata())
 def remove_wikilinks(pattern, data):
-    """
-    Remove links of the form [[Obama|Barack_Obama]]
-    """
+    """Remove links of the form [[Obama|Barack_Obama]]"""
     return len(pattern.sub(b'', data))
 
 
@@ -176,9 +170,7 @@ def remove_wikilinks(pattern, data):
                r'(<page[^>]*>)',
                data=getwikidata())
 def split_pages(pattern, data):
-    """
-    Split the data by the <page> tag.
-    """
+    """Split the data by the <page> tag"""
     return len(pattern.split(data))
 
 

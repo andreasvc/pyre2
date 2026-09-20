@@ -254,19 +254,23 @@ I've found that occasionally python's regular ``re`` module is actually slightly
 However, when the ``re`` module gets slow, it gets *really* slow, while this module
 buzzes along.
 
-In the below example, I'm running the data against 8MB of text from the colossal Wikipedia
-XML file. I'm running them multiple times, being careful to use the ``timeit`` module.
-To see more details, please see the `performance script <http://github.com/andreasvc/pyre2/tree/master/tests/performance.py>`_.
+The example below runs against 5 MB of Wikipedia XML data. Each operation is
+run multiple times with ``timeit``. These results were generated with Python
+3.13.5 and GCC 14.2.0; relative performance depends on the pattern, Python and
+RE2 versions, compiler, and hardware. To reproduce the results, see the
+`performance script <https://github.com/andreasvc/pyre2/blob/master/tests/performance.py>`_.
 
-+-----------------+---------------------------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
-|Test             |Description                                                                |# total runs|``re`` time(s)|``re2`` time(s)|% ``re`` time|``regex`` time(s)|% ``regex`` time|
-+=================+===========================================================================+============+==============+===============+=============+=================+================+
-|Findall URI|Email|Find list of '([a-zA-Z][a-zA-Z0-9]*)://([^ /]+)(/[^ ]*)?|([^ @]+)@([^ @]+)'|2           |6.262         |0.131          |2.08%        |5.119            |2.55%           |
-+-----------------+---------------------------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
-|Replace WikiLinks|This test replaces links of the form [[Obama|Barack_Obama]] to Obama.      |100         |4.374         |0.815          |18.63%       |1.176            |69.33%          |
-+-----------------+---------------------------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
-|Remove WikiLinks |This test splits the data by the <page> tag.                               |100         |4.153         |0.225          |5.43%        |0.537            |42.01%          |
-+-----------------+---------------------------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
++-----------------+-----------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
+|Test             |Description                                                |# total runs|``re`` time(s)|``re2`` time(s)|% ``re`` time|``regex`` time(s)|% ``regex`` time|
++=================+===========================================================+============+==============+===============+=============+=================+================+
+|Findall URI/Email|Find URIs and emails                                       |2           |4.950         |0.049          |0.99%        |7.641            |0.64%           |
++-----------------+-----------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
+|Replace WikiLinks|Replace links of the form [[Obama|Barack_Obama]] with Obama|100         |4.621         |4.206          |91.03%       |5.018            |83.81%          |
++-----------------+-----------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
+|Remove WikiLinks |Remove links of the form [[Obama|Barack_Obama]]            |100         |2.141         |3.940          |184.06%      |2.320            |169.85%         |
++-----------------+-----------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
+|Split pages      |Split the data by the <page> tag                           |100         |0.472         |0.148          |31.39%       |0.623            |23.77%          |
++-----------------+-----------------------------------------------------------+------------+--------------+---------------+-------------+-----------------+----------------+
 
 Feel free to add more speed tests to the bottom of the script and send a pull request my way!
 
