@@ -45,6 +45,46 @@ static inline int re2_replace_from_piece(
     return replacements;
 }
 
+static inline int re2_split_pieces(
+        re2::StringPiece input, const re2::RE2 *pattern,
+        int groups, int maxsplit, std::vector<re2::StringPiece> *pieces)
+{
+    std::vector<re2::StringPiece> matches(groups + 1);
+    int splits = 0;
+    int pos = 0;
+    int lookahead = 0;
+
+    pieces->clear();
+    pieces->reserve((input.size() / 4096 + 1) * (groups + 1) + 1);
+    while (pattern->Match(input, pos + lookahead, input.size(),
+            re2::RE2::UNANCHORED, matches.data(), groups + 1)) {
+        const int match_start = matches[0].data() - input.data();
+        const int match_end = match_start + matches[0].size();
+
+        if (match_start == match_end) {
+            if (pos + lookahead == input.size()) {
+                break;
+            }
+            ++lookahead;
+            continue;
+        }
+
+        pieces->emplace_back(input.data() + pos, match_start - pos);
+        for (int group = 1; group <= groups; ++group) {
+            pieces->push_back(matches[group]);
+        }
+        pos = match_end;
+        lookahead = 0;
+
+        ++splits;
+        if (maxsplit && splits >= maxsplit) {
+            break;
+        }
+    }
+    pieces->emplace_back(input.data() + pos, input.size() - pos);
+    return splits;
+}
+
 struct re2_offset_slot {
     int offset;
     int slot;

@@ -256,12 +256,10 @@ cdef class Pattern:
         Split a string by the occurrences of the pattern."""
         cdef char * cstring = NULL
         cdef Py_ssize_t size = 0
-        cdef int retval
-        cdef int pos = 0
-        cdef int lookahead = 0
-        cdef int num_split = 0
-        cdef StringPiece * sp
-        cdef StringPiece * matches
+        cdef Py_ssize_t piece_index
+        cdef StringPiece sp
+        cdef StringPiece piece
+        cdef vector[StringPiece] pieces
         cdef list resultlist = []
         cdef int encoded = 0
         cdef Py_buffer buf
@@ -272,66 +270,21 @@ cdef class Pattern:
         if pystring_to_cstring(string, &cstring, &size, &buf,
                 &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
-        matches = new_StringPiece_array(self.groups + 1)
-        sp = new StringPiece(cstring, size)
+        sp = StringPiece(cstring, size)
         try:
-
-            while True:
-                with nogil:
-                    retval = self.re_pattern.Match(
-                            sp[0],
-                            pos + lookahead,
-                            size,
-                            UNANCHORED,
-                            matches,
-                            self.groups + 1)
-                if retval == 0:
-                    break
-
-                match_start = matches[0].data() - cstring
-                match_end = match_start + matches[0].length()
-
-                # If an empty match, just look ahead until you find something
-                if match_start == match_end:
-                    if pos + lookahead == size:
-                        break
-                    lookahead += 1
-                    continue
-
-                if encoded:
-                    resultlist.append(
-                            char_to_unicode(&sp.data()[pos], match_start - pos))
-                else:
-                    resultlist.append(sp.data()[pos:match_start])
-                if self.groups > 0:
-                    for group in range(self.groups):
-                        if matches[group + 1].data() == NULL:
-                            resultlist.append(None)
-                        else:
-                            if encoded:
-                                resultlist.append(char_to_unicode(
-                                        matches[group + 1].data(),
-                                        matches[group + 1].length()))
-                            else:
-                                resultlist.append(matches[group + 1].data()[:
-                                        matches[group + 1].length()])
-
-                # offset the pos to move to the next point
-                pos = match_end
-                lookahead = 0
-
-                num_split += 1
-                if maxsplit and num_split >= maxsplit:
-                    break
-
-            if encoded:
-                resultlist.append(
-                        char_to_unicode(&sp.data()[pos], sp.length() - pos))
-            else:
-                resultlist.append(sp.data()[pos:size])
+            with nogil:
+                re2_split_pieces(
+                        sp, self.re_pattern, self.groups, maxsplit, &pieces)
+            resultlist = [None] * pieces.size()
+            for piece_index in range(pieces.size()):
+                piece = pieces[piece_index]
+                if piece.data() != NULL:
+                    if encoded:
+                        resultlist[piece_index] = char_to_unicode(
+                                piece.data(), piece.length())
+                    else:
+                        resultlist[piece_index] = piece.data()[:piece.length()]
         finally:
-            del sp
-            delete_StringPiece_array(matches)
             release_cstring(&buf)
         return resultlist
 

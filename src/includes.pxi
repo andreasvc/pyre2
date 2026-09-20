@@ -103,6 +103,9 @@ cdef extern from "_re2helpers.h":
     int re2_replace_from_piece(
             StringPiece input, const RE2 *pattern, StringPiece rewrite,
             int count, cpp_string *output) nogil
+    int re2_split_pieces(
+            StringPiece input, const RE2 *pattern, int groups, int maxsplit,
+            vector[StringPiece] *pieces) nogil
     void re2_unicode_indices(int *, int, const char *, int, int *, int *) except + nogil
     void re2_unicode_index_pair(int *, int *, const char *, int, int *, int *) nogil
 
