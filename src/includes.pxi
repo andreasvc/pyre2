@@ -18,9 +18,9 @@ cdef extern from "re2/stringpiece.h" namespace "re2":
         StringPiece()
         StringPiece(const char *)
         StringPiece(const char *, int)
-        const char * data()
+        const char * data() nogil
         int copy(char * buf, size_t n, size_t pos)
-        int length()
+        int length() nogil
 
 
 cdef extern from "re2/re2.h" namespace "re2":

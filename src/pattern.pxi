@@ -36,8 +36,9 @@ cdef class Pattern:
         cdef Py_buffer buf
         cdef int retval
         cdef int encoded = 0
-        cdef StringPiece * sp
-        cdef Match m = Match(self, self.groups + 1)
+        cdef StringPiece sp
+        cdef StringPiece * matches = NULL
+        cdef Match m
         cdef int cpos = 0, upos = pos
 
         if 0 <= endpos <= pos:
@@ -55,19 +56,27 @@ cdef class Pattern:
             if 0 <= endpos < size:
                 size = endpos
 
-            sp = new StringPiece(cstring, size)
+            sp = StringPiece(cstring, size)
+            matches = new_StringPiece_array(self.groups + 1)
             with nogil:
                 retval = self.re_pattern.Match(
-                        sp[0],
+                        sp,
                         pos,
                         size,
                         anchoring,
-                        m.matches,
+                        matches,
                         self.groups + 1)
-            del sp
             if retval == 0:
                 return None
 
+            m = Match.__new__(Match)
+            m._lastindex = -1
+            m._groups = None
+            m.pos = 0
+            m.endpos = -1
+            m.matches = matches
+            matches = NULL
+            m.re = self
             m.encoded = encoded
             m.nmatches = self.groups + 1
             m.string = string
@@ -79,6 +88,7 @@ cdef class Pattern:
             m._make_spans(cstring, size, &cpos, &upos)
             m._init_groups()
         finally:
+            delete_StringPiece_array(matches)
             release_cstring(&buf)
         return m
 
@@ -91,7 +101,7 @@ cdef class Pattern:
         cdef Py_buffer buf
         cdef int retval = 0
         cdef int encoded = 0
-        cdef StringPiece * sp
+        cdef StringPiece sp
 
         if 0 <= endpos <= pos:
             return False
@@ -107,16 +117,15 @@ cdef class Pattern:
             if 0 <= endpos < size:
                 size = endpos
 
-            sp = new StringPiece(cstring, size)
+            sp = StringPiece(cstring, size)
             with nogil:
                 retval = self.re_pattern.Match(
-                        sp[0],
+                        sp,
                         pos,
                         size,
                         UNANCHORED,
                         NULL,
                         0)
-            del sp
         finally:
             release_cstring(&buf)
         return retval != 0
@@ -129,7 +138,7 @@ cdef class Pattern:
         cdef int retval
         cdef int encoded = 0
         cdef int result = 0
-        cdef StringPiece * sp = NULL
+        cdef StringPiece sp
         cdef StringPiece * matches = NULL
 
         if pystring_to_cstring(string, &cstring, &size, &buf,
@@ -143,13 +152,13 @@ cdef class Pattern:
             if 0 <= endpos < size:
                 size = endpos
 
-            sp = new StringPiece(cstring, size)
+            sp = StringPiece(cstring, size)
             matches = new_StringPiece_array(1)
             try:
                 while True:
                     with nogil:
                         retval = self.re_pattern.Match(
-                                sp[0],
+                                sp,
                                 pos,
                                 size,
                                 UNANCHORED,
@@ -164,7 +173,6 @@ cdef class Pattern:
                     pos = matches[0].data() - cstring + (
                             matches[0].length() or 1)
             finally:
-                del sp
                 delete_StringPiece_array(matches)
         finally:
             release_cstring(&buf)
@@ -179,8 +187,9 @@ cdef class Pattern:
         cdef int encoded = 0
         cdef int retval
         cdef list resultlist = []
-        cdef StringPiece * sp = NULL
+        cdef StringPiece sp
         cdef StringPiece * matches = NULL
+        cdef int i
 
         if pystring_to_cstring(string, &cstring, &size, &buf,
                 &encoded, self.encoded) == -1:
@@ -193,13 +202,13 @@ cdef class Pattern:
             if 0 <= endpos < size:
                 size = endpos
 
-            sp = new StringPiece(cstring, size)
+            sp = StringPiece(cstring, size)
             matches = new_StringPiece_array(self.groups + 1)
 
             while True:
                 with nogil:
                     retval = self.re_pattern.Match(
-                            sp[0],
+                            sp,
                             pos,
                             size,
                             UNANCHORED,
@@ -211,8 +220,8 @@ cdef class Pattern:
                     if encoded:
                         resultlist.append(tuple([
                             '' if matches[i].data() is NULL else
-                            matches[i].data()[
-                                :matches[i].length()].decode('utf8')
+                            char_to_unicode(
+                                matches[i].data(), matches[i].length())
                             for i in range(1, self.groups + 1)]))
                     else:
                         resultlist.append(tuple([
@@ -221,8 +230,9 @@ cdef class Pattern:
                             for i in range(1, self.groups + 1)]))
                 else:  # 0 or 1 group; return list of strings
                     if encoded:
-                        resultlist.append(matches[self.groups].data()[
-                            :matches[self.groups].length()].decode('utf8'))
+                        resultlist.append(char_to_unicode(
+                            matches[self.groups].data(),
+                            matches[self.groups].length()))
                     else:
                         resultlist.append(matches[self.groups].data()[
                             :matches[self.groups].length()])
@@ -231,7 +241,6 @@ cdef class Pattern:
                 # offset the pos to move to the next point
                 pos = matches[0].data() - cstring + (matches[0].length() or 1)
         finally:
-            del sp
             delete_StringPiece_array(matches)
             release_cstring(&buf)
         return resultlist
@@ -239,66 +248,7 @@ cdef class Pattern:
     def finditer(self, object string, int pos=0, int endpos=-1):
         """Yield all non-overlapping matches of pattern in string as Match
         objects."""
-        result = iter(self._finditer(string, pos, endpos))
-        next(result)  # dummy value to raise error before start of generator
-        return result
-
-    def _finditer(self, object string, int pos=0, int endpos=-1):
-        cdef char * cstring = NULL
-        cdef Py_ssize_t size = 0
-        cdef Py_buffer buf
-        cdef int retval
-        cdef StringPiece * sp = NULL
-        cdef Match m
-        cdef int encoded = 0
-        cdef int cpos = 0, upos = pos
-
-        if pystring_to_cstring(string, &cstring, &size, &buf,
-                &encoded, self.encoded) == -1:
-            raise TypeError('expected string or buffer')
-        try:
-            if encoded == 2 and (pos or endpos != -1):
-                utf8indices(cstring, size, &pos, &endpos)
-                cpos = pos
-            if pos > size:
-                return
-            if 0 <= endpos < size:
-                size = endpos
-
-            sp = new StringPiece(cstring, size)
-
-            yield
-            while True:
-                m = Match(self, self.groups + 1)
-                m.string = string
-                with nogil:
-                    retval = self.re_pattern.Match(
-                            sp[0],
-                            pos,
-                            size,
-                            UNANCHORED,
-                            m.matches,
-                            self.groups + 1)
-                if retval == 0:
-                    break
-                m.encoded = encoded
-                m.nmatches = self.groups + 1
-                m.pos = pos
-                if endpos == -1:
-                    m.endpos = size
-                else:
-                    m.endpos = endpos
-                m._make_spans(cstring, size, &cpos, &upos)
-                m._init_groups()
-                yield m
-                if pos == size:
-                    break
-                # offset the pos to move to the next point
-                pos = m.matches[0].data() - cstring + (
-                        m.matches[0].length() or 1)
-        finally:
-            del sp
-            release_cstring(&buf)
+        return _MatchIterator(self, string, pos, endpos)
 
     def split(self, string, int maxsplit=0):
         """split(string[, maxsplit = 0]) --> list
@@ -628,6 +578,108 @@ cdef class Pattern:
 
     def __dealloc__(self):
         del self.re_pattern
+
+
+cdef class _MatchIterator:
+    cdef Pattern pattern
+    cdef object string
+    cdef char * cstring
+    cdef Py_ssize_t size
+    cdef Py_buffer buf
+    cdef StringPiece sp
+    cdef int pos
+    cdef int endpos
+    cdef int encoded
+    cdef int cpos
+    cdef int upos
+    cdef bint done
+    cdef bint buffer_acquired
+
+    def __init__(self, Pattern pattern, object string, int pos, int endpos):
+        self.pattern = pattern
+        self.string = string
+        self.cstring = NULL
+        self.size = 0
+        memset(&self.buf, 0, sizeof(Py_buffer))
+        self.buf.len = -1
+        self.pos = pos
+        self.endpos = endpos
+        self.encoded = 0
+        self.cpos = 0
+        self.upos = pos
+        self.done = False
+        self.buffer_acquired = False
+
+        if pystring_to_cstring(string, &self.cstring, &self.size, &self.buf,
+                &self.encoded, pattern.encoded) == -1:
+            raise TypeError('expected string or buffer')
+        self.buffer_acquired = True
+
+        if self.encoded == 2 and (self.pos or self.endpos != -1):
+            utf8indices(self.cstring, self.size, &self.pos, &self.endpos)
+            self.cpos = self.pos
+        if self.pos > self.size:
+            self.done = True
+        if 0 <= self.endpos < self.size:
+            self.size = self.endpos
+        self.sp = StringPiece(self.cstring, self.size)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        cdef int retval
+        cdef StringPiece * matches = NULL
+        cdef Match m
+
+        if self.done:
+            raise StopIteration
+
+        matches = new_StringPiece_array(self.pattern.groups + 1)
+        try:
+            with nogil:
+                retval = self.pattern.re_pattern.Match(
+                        self.sp,
+                        self.pos,
+                        self.size,
+                        UNANCHORED,
+                        matches,
+                        self.pattern.groups + 1)
+            if retval == 0:
+                self.done = True
+                raise StopIteration
+
+            m = Match.__new__(Match)
+            m._lastindex = -1
+            m._groups = None
+            m.pos = 0
+            m.endpos = -1
+            m.matches = matches
+            matches = NULL
+            m.re = self.pattern
+            m.string = self.string
+            m.encoded = self.encoded
+            m.nmatches = self.pattern.groups + 1
+            m.pos = self.pos
+            if self.endpos == -1:
+                m.endpos = self.size
+            else:
+                m.endpos = self.endpos
+            m._make_spans(self.cstring, self.size, &self.cpos, &self.upos)
+            m._init_groups()
+
+            if self.pos == self.size:
+                self.done = True
+            else:
+                self.pos = m.matches[0].data() - self.cstring + (
+                        m.matches[0].length() or 1)
+            return m
+        finally:
+            delete_StringPiece_array(matches)
+
+    def __dealloc__(self):
+        if self.buffer_acquired:
+            release_cstring(&self.buf)
 
 
 class FallbackPattern:
