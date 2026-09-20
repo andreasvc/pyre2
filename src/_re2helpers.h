@@ -2,14 +2,47 @@
 #define PYRE2_HELPERS_H
 
 #include <algorithm>
+#include <string>
 #include <vector>
 
-#include "re2/stringpiece.h"
+#include "re2/re2.h"
 
 static inline re2::StringPiece * new_StringPiece_array(int n)
 {
     re2::StringPiece * sp = new re2::StringPiece[n];
     return sp;
+}
+
+static inline int re2_replace_from_piece(
+        re2::StringPiece input, const re2::RE2 *pattern,
+        re2::StringPiece rewrite, int count, std::string *output)
+{
+    output->clear();
+    output->reserve(input.size());
+    if (count < 0) {
+        output->append(input.data(), input.size());
+        return 0;
+    }
+
+    const int match_count = re2::RE2::MaxSubmatch(rewrite) + 1;
+    std::vector<re2::StringPiece> matches(match_count);
+    int replacements = 0;
+    int pos = 0;
+
+    while ((count == 0 || replacements < count)
+            && pattern->Match(input, pos, input.size(), re2::RE2::UNANCHORED,
+                    matches.data(), match_count)) {
+        const int match_start = matches[0].data() - input.data();
+        const int match_end = match_start + matches[0].size();
+        output->append(input.data() + pos, match_start - pos);
+        if (!pattern->Rewrite(output, rewrite, matches.data(), match_count)) {
+            return -1;
+        }
+        pos = match_end;
+        ++replacements;
+    }
+    output->append(input.data() + pos, input.size() - pos);
+    return replacements;
 }
 
 struct re2_offset_slot {

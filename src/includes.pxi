@@ -100,6 +100,9 @@ cdef extern from "re2/re2.h" namespace "re2":
 
 cdef extern from "_re2helpers.h":
     StringPiece * new_StringPiece_array(int) nogil
+    int re2_replace_from_piece(
+            StringPiece input, const RE2 *pattern, StringPiece rewrite,
+            int count, cpp_string *output) nogil
     void re2_unicode_indices(int *, int, const char *, int, int *, int *) except + nogil
     void re2_unicode_index_pair(int *, int *, const char *, int, int *, int *) nogil
 

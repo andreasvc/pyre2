@@ -1,12 +1,10 @@
-"""
-This module runs the performance tests to compare the ``re`` module with the
-``re2`` module. You can just run it from the command line, assuming you have re2
-installed, and it will output a table in ReST format comparing everything.
+"""This module runs the performance tests to compare the ``re`` module with the
+``re2`` module. You can just run it from the command line, assuming you have
+re2 installed, and it will output a table in ReST format comparing everything.
 
 To add a test, you can add a function to the bottom of this page that uses the
-@register_test() decorator. Alternatively, you can create a module that uses it and
-import it.
-"""
+@register_test() decorator. Alternatively, you can create a module that uses it
+and import it."""
 import re
 from timeit import Timer
 
@@ -138,48 +136,48 @@ def getwikidata():
 
 
 
-@register_test("Findall URI|Email",
+@register_test("Findall URI/Email",
                r'([a-zA-Z][a-zA-Z0-9]*)://([^ /]+)(/[^ ]*)?|([^ @]+)@([^ @]+)',
                2,
                data=getwikidata())
 def findall_uriemail(pattern, data):
     """
-    Find list of '([a-zA-Z][a-zA-Z0-9]*)://([^ /]+)(/[^ ]*)?|([^ @]+)@([^ @]+)'
+    Find URIs and emails'
     """
     return len(pattern.findall(data))
 
 
 
 @register_test("Replace WikiLinks",
-               r'(\[\[(^\|)+.*?\]\])',
+               r'\[\[([^]|]+)(?:\|[^]]*)?\]\]',
                data=getwikidata())
 def replace_wikilinks(pattern, data):
     """
-    This test replaces links of the form [[Obama|Barack_Obama]] to Obama.
+    Replace links of the form [[Obama|Barack_Obama]] with Obama.
     """
     return len(pattern.sub(br'\1', data))
 
 
 
 @register_test("Remove WikiLinks",
-               r'(\[\[(^\|)+.*?\]\])',
+               r'\[\[[^]]*\]\]',
                data=getwikidata())
 def remove_wikilinks(pattern, data):
     """
-    This test replaces links of the form [[Obama|Barack_Obama]] to the empty string
+    Remove links of the form [[Obama|Barack_Obama]]
     """
-    return len(pattern.sub(r'', data))
+    return len(pattern.sub(b'', data))
 
 
 
 
 
-@register_test("Remove WikiLinks",
+@register_test("Split pages",
                r'(<page[^>]*>)',
                data=getwikidata())
 def split_pages(pattern, data):
     """
-    This test splits the data by the <page> tag.
+    Split the data by the <page> tag.
     """
     return len(pattern.split(data))
 

@@ -353,6 +353,61 @@ cdef class Pattern:
         result = self._subn(repl, string, count, &num_repl)
         return result, num_repl
 
+    cdef bint _can_use_re2_rewrite(self, bytes repl):
+        """Return whether *repl* has the subset of syntax RE2 shares with re."""
+        cdef const unsigned char * data = repl
+        cdef Py_ssize_t pos = 0
+        cdef Py_ssize_t size = len(repl)
+        cdef int group
+
+        while pos < size:
+            if data[pos] != b'\\':
+                pos += 1
+                continue
+            pos += 1
+            if pos >= size:
+                return False
+            if data[pos] == b'\\':
+                pos += 1
+                continue
+            if b'1' <= data[pos] <= b'9':
+                group = data[pos] - 48
+                if group > self.groups:
+                    return False
+                pos += 1
+                # Python treats two adjacent digits as one group reference.
+                if pos < size and b'0' <= data[pos] <= b'9':
+                    return False
+                continue
+            return False
+        return True
+
+    cdef bint _matches_empty(self):
+        """Return whether the pattern accepts the empty string."""
+        cdef int retval
+        cdef StringPiece empty = StringPiece()
+
+        with nogil:
+            retval = self.re_pattern.Match(
+                    empty, 0, 0, ANCHOR_BOTH, NULL, 0)
+        return retval != 0
+
+    cdef bint _has_re2_group_rewrite(self, bytes repl):
+        cdef const unsigned char * data = repl
+        cdef Py_ssize_t pos = 0
+        cdef Py_ssize_t size = len(repl)
+
+        while pos + 1 < size:
+            if data[pos] != b'\\':
+                pos += 1
+            elif data[pos + 1] == b'\\':
+                pos += 2
+            elif b'1' <= data[pos + 1] <= b'9':
+                return True
+            else:
+                pos += 2
+        return False
+
     cdef _subn(self, repl, string, int count, int *num_repl):
         cdef bytes repl_b
         cdef char * cstring
@@ -362,7 +417,9 @@ cdef class Pattern:
         cdef Py_ssize_t input_size = 0
         cdef Py_buffer input_buf
         cdef StringPiece sp
+        cdef StringPiece input_sp
         cdef cpp_string input_str
+        cdef int replace_status = 0
         cdef int string_encoded = 0
         cdef int repl_encoded = 0
 
@@ -374,12 +431,12 @@ cdef class Pattern:
         if not repl_encoded and not isinstance(repl, bytes):
             repl_b = bytes(repl)  # coerce buffer to bytes object
 
-        if count > 1 or <char>b'\\' in repl_b:
+        if (count > 1 or not self._can_use_re2_rewrite(repl_b)
+                or (self._has_re2_group_rewrite(repl_b)
+                    and self._matches_empty())):
             # Limit on number of substitutions or replacement string contains
-            # escape sequences; handle with Match.expand() implementation.
-            # RE2 does support simple numeric group references \1, \2,
-            # but the number of differences with Python behavior is
-            # non-trivial.
+            # syntax whose Python behavior differs from RE2; handle with the
+            # Match.expand() implementation.
             return self._subn_expand(repl_b, string, count, num_repl)
 
         if pystring_to_cstring(string, &input_cstring, &input_size, &input_buf,
@@ -390,16 +447,23 @@ cdef class Pattern:
             size = len(repl_b)
             sp = StringPiece(cstring, size)
 
-            input_str = cpp_string(input_cstring, input_size)
-            # NB: RE2 treats unmatched groups in repl as empty string;
-            # Python raises an error.
-            with nogil:
-                if count == 0:
-                    num_repl[0] = GlobalReplace(
-                            &input_str, self.re_pattern[0], sp)
-                elif count == 1:
-                    num_repl[0] = Replace(
-                            &input_str, self.re_pattern[0], sp)
+            if not self._has_re2_group_rewrite(repl_b):
+                input_str = cpp_string(input_cstring, input_size)
+                with nogil:
+                    if count == 0:
+                        num_repl[0] = GlobalReplace(
+                                &input_str, self.re_pattern[0], sp)
+                    elif count == 1:
+                        num_repl[0] = Replace(
+                                &input_str, self.re_pattern[0], sp)
+            else:
+                input_sp = StringPiece(input_cstring, input_size)
+                with nogil:
+                    replace_status = re2_replace_from_piece(
+                            input_sp, self.re_pattern, sp, count, &input_str)
+                if replace_status < 0:
+                    raise RegexError('invalid replacement template')
+                num_repl[0] = replace_status
 
             if string_encoded or (repl_encoded and num_repl[0] > 0):
                 result = cpp_to_unicode(input_str)
@@ -509,7 +573,7 @@ cdef class Pattern:
         cdef int pos = 0
         cdef int encoded = 0
         cdef StringPiece sp
-        cdef Match m
+        cdef Match m = Match(self, self.groups + 1)
         cdef bytearray result = bytearray()
 
         if count < 0:
@@ -521,7 +585,6 @@ cdef class Pattern:
         sp = StringPiece(cstring, size)
         try:
             while True:
-                m = Match(self, self.groups + 1)
                 m.string = string
                 with nogil:
                     retval = self.re_pattern.Match(
@@ -545,6 +608,9 @@ cdef class Pattern:
 
                 m.encoded = encoded
                 m.nmatches = self.groups + 1
+                m._lastindex = -1
+                m._groups = None
+                m._named_groups = None
                 m._init_groups()
                 m._expand(repl, result)
 

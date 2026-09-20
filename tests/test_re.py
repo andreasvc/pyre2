@@ -214,6 +214,19 @@ class ReTests(unittest.TestCase):
         self.assertEqual(re.subn("b*", "x", "xyz"), ('xxxyxzx', 4))
         self.assertEqual(re.subn("b*", "x", "xyz", 2), ('xxxyz', 2))
 
+    def test_re_sub_numeric_group_rewrite(self):
+        cases = (
+            (r'(a)(b)', r'\2-\1', 'ab ab', 'b-a b-a'),
+            (r'(a)|(b)', r'<\1><\2>', 'ab', '<a><><><b>'),
+            (r'(a)', r'\\\1', 'a', r'\a'),
+            (rb'(a)(b)', rb'\2-\1', b'ab ab', b'b-a b-a'),
+        )
+        for pattern, repl, string, expected in cases:
+            with self.subTest(pattern=pattern, repl=repl):
+                self.assertEqual(re.sub(pattern, repl, string), expected)
+
+        self.assertEqual(re.sub(r'(a)', r'<\1>', 'aa', count=1), '<a>a')
+
     def test_re_sub_callback_empty_matches(self):
         matches = []
 
