@@ -57,11 +57,11 @@ def _compile(object pattern, int flags=0, int max_mem=8388608):
         return fallback(original_pattern, flags, "Backreferences not supported")
     except CharClassProblemException:
         return fallback(original_pattern, flags,
-                "\W and \S not supported inside character classes")
+                r"\W and \S not supported inside character classes")
 
     # Set the options given the flags above.
     if flags & _I:
-        opts.set_case_sensitive(0);
+        opts.set_case_sensitive(0)
 
     opts.set_max_mem(max_mem)
     opts.set_log_errors(0)
@@ -75,7 +75,7 @@ def _compile(object pattern, int flags=0, int max_mem=8388608):
 
     cdef RE2 *re_pattern
     with nogil:
-         re_pattern = new RE2(s[0], opts)
+        re_pattern = new RE2(s[0], opts)
 
     if not re_pattern.ok():
         # Something went wrong with the compilation.

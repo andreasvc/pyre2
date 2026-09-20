@@ -136,14 +136,14 @@ if sys.version_info[:2] >= (3, 11):
     @enum._simple_enum(enum.IntFlag, boundary=enum.KEEP)
     class RegexFlag:
         NOFLAG = 0
-        ASCII = A = re.ASCII # assume ascii "locale"
-        IGNORECASE = I = re.IGNORECASE # ignore case
-        LOCALE = L = re.LOCALE # assume current 8-bit locale
-        UNICODE = U = re.UNICODE # assume unicode "locale"
-        MULTILINE = M = re.MULTILINE # make anchors look for newline
-        DOTALL = S = re.DOTALL # make dot match newline
-        VERBOSE = X = re.VERBOSE # ignore whitespace and comments
-        DEBUG = re.DEBUG # dump pattern after compilation
+        ASCII = A = re.ASCII  # assume ascii "locale"
+        IGNORECASE = I = re.IGNORECASE  # ignore case
+        LOCALE = L = re.LOCALE  # assume current 8-bit locale
+        UNICODE = U = re.UNICODE  # assume unicode "locale"
+        MULTILINE = M = re.MULTILINE  # make anchors look for newline
+        DOTALL = S = re.DOTALL  # make dot match newline
+        VERBOSE = X = re.VERBOSE  # ignore whitespace and comments
+        DEBUG = re.DEBUG  # dump pattern after compilation
         __str__ = object.__str__
         _numeric_repr_ = hex
 

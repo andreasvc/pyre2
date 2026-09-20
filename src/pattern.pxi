@@ -211,8 +211,8 @@ cdef class Pattern:
                     if encoded:
                         resultlist.append(tuple([
                             '' if matches[i].data() is NULL else
-                            matches[i].data()[:matches[i].length()
-                                ].decode('utf8')
+                            matches[i].data()[
+                                :matches[i].length()].decode('utf8')
                             for i in range(1, self.groups + 1)]))
                     else:
                         resultlist.append(tuple([

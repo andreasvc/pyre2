@@ -8,7 +8,7 @@ BUILD_SOURCES := \
 	$(wildcard src/*.pyx src/*.pxi src/*.h) \
 	src/CMakeLists.txt
 
-.PHONY: all build install test clean distclean
+.PHONY: all build install test lint clean distclean
 
 all: build
 
@@ -32,6 +32,9 @@ test: $(WHEEL_STAMP)
 		test "$$#" -eq 1; \
 		$(PYTHON) -m pip install "$${1}[test]"
 	$(PYTHON) -m pytest
+
+lint:
+	cython-lint src/
 
 clean:
 	rm -rf build pyre2.egg-info UNKNOWN.egg-info
