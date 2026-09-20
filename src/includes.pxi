@@ -2,9 +2,11 @@ cimport cpython.unicode
 from libcpp.map cimport map
 from libcpp.string cimport string as cpp_string
 from libcpp.vector cimport vector
-from libc.string cimport memset
+from libc.string cimport memcpy, memset
 from cpython.buffer cimport Py_buffer, PyBUF_SIMPLE, PyObject_CheckBuffer, \
         PyObject_GetBuffer, PyBuffer_Release
+from cpython.bytearray cimport PyByteArray_AS_STRING, PyByteArray_GET_SIZE, \
+        PyByteArray_Resize
 from cpython.version cimport PY_MAJOR_VERSION
 
 

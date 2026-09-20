@@ -361,8 +361,8 @@ cdef class Pattern:
         cdef Py_ssize_t size
         cdef Py_ssize_t input_size = 0
         cdef Py_buffer input_buf
-        cdef StringPiece * sp = NULL
-        cdef cpp_string * input_str = NULL
+        cdef StringPiece sp
+        cdef cpp_string input_str
         cdef int string_encoded = 0
         cdef int repl_encoded = 0
 
@@ -388,25 +388,24 @@ cdef class Pattern:
         try:
             cstring = repl_b
             size = len(repl_b)
-            sp = new StringPiece(cstring, size)
+            sp = StringPiece(cstring, size)
 
-            input_str = new cpp_string(input_cstring, input_size)
+            input_str = cpp_string(input_cstring, input_size)
             # NB: RE2 treats unmatched groups in repl as empty string;
             # Python raises an error.
             with nogil:
                 if count == 0:
                     num_repl[0] = GlobalReplace(
-                            input_str, self.re_pattern[0], sp[0])
+                            &input_str, self.re_pattern[0], sp)
                 elif count == 1:
                     num_repl[0] = Replace(
-                            input_str, self.re_pattern[0], sp[0])
+                            &input_str, self.re_pattern[0], sp)
 
             if string_encoded or (repl_encoded and num_repl[0] > 0):
-                result = cpp_to_unicode(input_str[0])
+                result = cpp_to_unicode(input_str)
             else:
-                result = cpp_to_bytes(input_str[0])
+                result = cpp_to_bytes(input_str)
         finally:
-            del input_str, sp
             release_cstring(&input_buf)
         return result
 
@@ -421,7 +420,7 @@ cdef class Pattern:
         cdef int searchpos = 0
         cdef int encoded = 0
         cdef unsigned char lead
-        cdef StringPiece * sp = NULL
+        cdef StringPiece sp
         cdef Match m
         cdef bytearray result = bytearray()
         cdef int cpos = 0, upos = 0
@@ -430,13 +429,13 @@ cdef class Pattern:
                 &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
         try:
-            sp = new StringPiece(cstring, size)
+            sp = StringPiece(cstring, size)
             while count >= 0:
                 m = Match(self, self.groups + 1)
                 m.string = string
                 with nogil:
                     retval = self.re_pattern.Match(
-                            sp[0],
+                            sp,
                             searchpos,
                             size,
                             UNANCHORED,
@@ -447,7 +446,8 @@ cdef class Pattern:
 
                 match_start = m.matches[0].data() - cstring
                 match_end = match_start + m.matches[0].length()
-                result.extend(sp.data()[pos:match_start])
+                bytearray_extend_raw(result, sp.data() + pos,
+                        match_start - pos)
                 pos = match_end
 
                 m.encoded = encoded
@@ -492,9 +492,8 @@ cdef class Pattern:
                         searchpos = match_end + 1
                 else:
                     searchpos = match_end
-            result.extend(sp.data()[pos:size])
+            bytearray_extend_raw(result, sp.data() + pos, size - pos)
         finally:
-            del sp
             release_cstring(&buf)
         return result.decode('utf8') if encoded else bytes(result)
 
@@ -509,7 +508,7 @@ cdef class Pattern:
         cdef int endpos = 0
         cdef int pos = 0
         cdef int encoded = 0
-        cdef StringPiece * sp
+        cdef StringPiece sp
         cdef Match m
         cdef bytearray result = bytearray()
 
@@ -519,14 +518,14 @@ cdef class Pattern:
         if pystring_to_cstring(string, &cstring, &size, &buf,
                 &encoded, self.encoded) == -1:
             raise TypeError('expected string or buffer')
-        sp = new StringPiece(cstring, size)
+        sp = StringPiece(cstring, size)
         try:
             while True:
                 m = Match(self, self.groups + 1)
                 m.string = string
                 with nogil:
                     retval = self.re_pattern.Match(
-                            sp[0],
+                            sp,
                             pos,
                             size,
                             UNANCHORED,
@@ -541,7 +540,7 @@ cdef class Pattern:
                     if endpos > size:
                         break
                 prevendpos = endpos
-                result.extend(sp.data()[pos:endpos])
+                bytearray_extend_raw(result, sp.data() + pos, endpos - pos)
                 pos = endpos + m.matches[0].length()
 
                 m.encoded = encoded
@@ -552,9 +551,8 @@ cdef class Pattern:
                 num_repl[0] += 1
                 if count and num_repl[0] >= count:
                     break
-            result.extend(sp.data()[pos:size])
+            bytearray_extend_raw(result, sp.data() + pos, size - pos)
         finally:
-            del sp
             release_cstring(&buf)
         return result.decode('utf8') if encoded else bytes(result)
 

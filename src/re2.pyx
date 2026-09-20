@@ -359,6 +359,19 @@ cdef inline unicode char_to_unicode(const char * input, int length):
     return cpython.unicode.PyUnicode_DecodeUTF8(input, length, 'strict')
 
 
+cdef inline int bytearray_extend_raw(
+        bytearray result, const char *data, Py_ssize_t length) except -1:
+    """Extend bytearray without creating a temporary bytes object."""
+    cdef Py_ssize_t old_size
+    if length <= 0:
+        return 0
+    old_size = PyByteArray_GET_SIZE(result)
+    if PyByteArray_Resize(result, old_size + length) < 0:
+        return -1
+    memcpy(PyByteArray_AS_STRING(result) + old_size, data, length)
+    return 0
+
+
 cdef inline unicode_to_bytes(object pystring, int * encoded,
         int checkotherencoding):
     """Convert a unicode string to a utf8 bytes object, if necessary.

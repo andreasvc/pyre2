@@ -127,7 +127,7 @@ cdef class Match:
         self._expand(templ, result)
         return result.decode('utf8') if self.encoded else bytes(result)
 
-    cdef _expand(self, bytes templ, bytearray result):
+    cdef int _expand(self, bytes templ, bytearray result) except -1:
         """Expand template by appending to an existing bytearray.
         Everything remains UTF-8 encoded."""
         cdef char * cstring
@@ -141,9 +141,9 @@ cdef class Match:
             prev = n
             n = templ.find(b'\\', prev)
             if n == -1:
-                result.extend(templ[prev:])
+                bytearray_extend_raw(result, cstring + prev, size - prev)
                 break
-            result.extend(templ[prev:n])
+            bytearray_extend_raw(result, cstring + prev, n - prev)
             n += 1
             if (n + 2 < size and cstring[n] == b'x'
                     and ishex(cstring[n + 1]) and ishex(cstring[n + 2])):
@@ -223,7 +223,7 @@ cdef class Match:
                     result.append(b'\\')
                     result.append(cstring[n])
                 n += 1
-        return bytes(result)
+        return 0
 
     def start(self, group=0):
         return self.span(group)[0]
