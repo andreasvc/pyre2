@@ -22,30 +22,31 @@ jobs:
       PYTHONIOENCODING: utf-8
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
-    - uses: conda-incubator/setup-miniconda@v3
+    - uses: conda-incubator/setup-miniconda@v4
       env:
         PY_VER: ${{ matrix.python-version }}
       with:
         activate-environment: pyre2
-        channels: conda-forge
+        channels: conda-forge,conda-forge/label/python_rc
+        conda-remove-defaults: true
         allow-softlinks: true
         channel-priority: flexible
         show-channel-urls: true
 
     - name: Cache conda packages
       id: cache
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       env:
         # Increase this value to reset cache and rebuild the env during the PR
         CACHE_NUMBER: 0
       with:
           path: /home/runner/conda_pkgs_dir
           key:
-            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-python-${{ matrix.python }}-${{hashFiles('environment.devenv.yml') }}
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-python-${{ matrix.python-version }}-${{hashFiles('environment.devenv.yml') }}
           restore-keys: |
-            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-python-${{ matrix.python }}-
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-python-${{ matrix.python-version }}-
             ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-
 
     - name: Configure condadev environment

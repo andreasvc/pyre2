@@ -26,11 +26,11 @@ jobs:
           triplet: "x64-windows"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         name: Install Python
         with:
           python-version: '3.14'
@@ -49,7 +49,6 @@ jobs:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_TEST_SKIP: "*_arm64 *universal2:arm64 *linux_i686"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
-          CIBW_MANYLINUX_I686_IMAGE: manylinux2010
           CIBW_BUILD: cp311-* cp312-* cp313-* cp314-* cp315-*
           CIBW_SKIP: "*musllinux* *i686"
           CIBW_BEFORE_ALL_LINUX: >
@@ -61,7 +60,7 @@ jobs:
           CIBW_BEFORE_ALL_WINDOWS: >
             vcpkg install pkgconf:${{ matrix.triplet }} re2:${{ matrix.triplet }}
             && vcpkg integrate install
-          CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake'
+          CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_GENERATOR="NMake Makefiles" CMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake'
           CIBW_TEST_REQUIRES: ""
           CIBW_TEST_COMMAND: ""
 
@@ -74,9 +73,9 @@ jobs:
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         name: Install Python
         with:
           python-version: '3.14'
