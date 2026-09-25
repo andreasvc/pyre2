@@ -59,7 +59,7 @@ jobs:
           CIBW_BEFORE_ALL_WINDOWS: >
             vcpkg install pkgconf:${{ matrix.triplet }} re2:${{ matrix.triplet }}
             && vcpkg integrate install
-          CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_GENERATOR="NMake Makefiles" CMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake'
+          CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_GENERATOR="Visual Studio 17 2022" CMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake'
           CIBW_TEST_REQUIRES: ""
           CIBW_TEST_COMMAND: ""
 
